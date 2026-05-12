@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1440">
+<title>LHH Career Studio — Intelligent Networking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@400&family=Material+Icons+Round&display=swap" rel="stylesheet">
+<style>
+:root{
+--text-1:#1C304B;--text-2:#45505F;--text-3:#ADADB5;
+--bg-1:#F7F7FA;--bg-2:#F1F0F5;--bg-white:#FFFFFF;
+--border-1:#EBEBEE;--border-input:#1C304B;
+--brand-1:#441750;--brand-2:#AA0285;--brand-3:#FF097F;--brand-4:#FF5858;
+--brand-ph:#613E6B;--brand-pp:#390447;
+--accent-100:#F5EAF9;--accent-500:#4F185A;--pressed:#7A005F;--hov:#8C006D;
+--chip-bg:#F8F8F9;--chip-active:#E4D8F4;
+--sidebar-bg:#291746;--sidebar-active:#392953;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Noto Sans',sans-serif;color:var(--text-1);background:var(--bg-1);font-size:14px;line-height:24px;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,textarea{font-family:inherit}
+.mi{font-family:'Material Icons Round';font-weight:normal;font-size:20px;line-height:1;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-feature-settings:'liga';font-feature-settings:'liga'}
+img{display:block;max-width:100%}
+
+/* BUTTONS */
+.btn{font-weight:500;font-size:14px;line-height:24px;letter-spacing:.7px;text-transform:uppercase;padding:8px 24px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s;white-space:nowrap}
+.btn-primary{background:var(--brand-1);color:#fff}
+.btn-primary:hover{background:var(--brand-ph)}
+.btn-primary:active{background:var(--brand-pp)}
+.btn-secondary{background:transparent;color:var(--text-1);border-color:var(--text-1)}
+.btn-secondary:hover{border-color:#AA0285}
+.btn-sm{padding:8px 24px;font-size:14px;line-height:24px;letter-spacing:.7px;border-radius:8px}
+.btn-full{width:100%}
+.btn .mi{font-size:16px}
+.link-btn{color:var(--brand-2);font-size:12px;font-weight:500;letter-spacing:.24px;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;padding:0}
+.link-btn .mi{font-size:16px}
+
+/* DS CHIPS */
+.ds-chip{font-weight:500;font-size:12px;line-height:16px;letter-spacing:.6px;text-transform:uppercase;padding:8px 16px;border-radius:8px;display:inline-flex;align-items:center;gap:4px;cursor:pointer;border:1px solid var(--text-1);background:var(--chip-bg);color:var(--text-1);transition:background .15s,border-color .15s,color .15s;user-select:none}
+.ds-chip:hover{background:#fff;border-color:var(--hov)}
+.ds-chip.active{background:var(--chip-active);border-color:var(--pressed);color:var(--accent-500)}
+.ds-chip-sm{padding:4px 12px;border-radius:6px}
+.ds-chip-static{cursor:default}
+.ds-chip-static:hover{background:var(--chip-bg);border-color:var(--text-1)}
+/* INFORMATIONAL TAGS — read-only, no interactive affordance */
+.info-tag{font-weight:500;font-size:11px;line-height:16px;letter-spacing:.5px;text-transform:uppercase;padding:3px 10px;border-radius:16px;display:inline-flex;align-items:center;color:var(--text-2);background:#EAEAEA;white-space:nowrap;cursor:default;user-select:none}
+
+/* DS PILLS — must be inline-flex, NOT stretch */
+.pill{font-weight:500;font-size:12px;line-height:16px;letter-spacing:.6px;text-transform:uppercase;padding:4px 16px;border-radius:16px;display:inline-flex;align-items:center;color:var(--text-1);background:#EAEAEA;white-space:nowrap;align-self:flex-start}
+.pill-alert{background:#FFF0CC}
+.pill-success{background:#DCF5D6}
+.pill-live{background:#DCF5D6;border:1px solid #33841F;font-size:10px;padding:2px 8px;border-radius:4px;letter-spacing:.4px}
+
+/* SHELL */
+.shell{display:flex;min-height:100vh}
+.sidebar{width:241px;background:var(--sidebar-bg);display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;z-index:10}
+.sidebar-logo{padding:16px 8px 16px 32px;display:flex;align-items:center}
+.sidebar-logo img{height:32px;width:auto}
+.sidebar-nav{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-bottom:8px}
+.nav-section{display:flex;flex-direction:column}
+.nav-item{display:flex;align-items:center;gap:12px;padding:18px 8px 18px 32px;color:#fff;font-size:14px;font-weight:500;cursor:pointer;position:relative;user-select:none}
+.nav-item img{width:20px;height:20px;opacity:.9}
+.nav-item:hover:not(.active){background:rgba(255,255,255,.04)}
+.nav-item.active{background:var(--sidebar-active)}
+.nav-item.active::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:56px;background:var(--brand-4);border-radius:0 8px 8px 0}
+
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--bg-1)}
+.topbar{background:var(--bg-white);border-bottom:1px solid var(--border-1);display:flex;justify-content:flex-end;align-items:center;gap:20px;padding:16px 32px;height:72px;flex-shrink:0}
+.search{background:var(--bg-1);border-radius:8px;padding:8px 16px;display:flex;gap:8px;align-items:center;width:200px}
+.search .mi{color:var(--text-2);font-size:22px}
+.search input{background:none;border:none;outline:none;flex:1;min-width:0;font-size:14px;color:var(--text-1)}
+.search input::placeholder{color:var(--text-3)}
+.topbar-icon{padding:4px;display:flex;color:var(--text-1)}
+.topbar-icon .mi{font-size:24px}
+.topbar-sep{width:1px;height:40px;background:var(--border-1)}
+.topbar-profile{display:flex;align-items:center;gap:12px;cursor:pointer}
+.avatar-tb{width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.avatar-tb img{width:100%;height:100%;object-fit:cover}
+.profile-name{font-weight:500;font-size:14px;color:var(--text-1);display:flex;align-items:center;gap:2px}
+.profile-name .mi{font-size:22px}
+
+/* DEV NAV */
+.devnav{background:#111827;color:#fff;padding:8px 32px;display:flex;gap:10px;align-items:center;font-size:12px;border-bottom:1px solid #374151;flex-shrink:0}
+.devnav-label{color:#9CA3AF;text-transform:uppercase;letter-spacing:.6px;font-weight:500;font-size:10px}
+.devnav button{background:#1F2937;color:#D1D5DB;border:1px solid #374151;border-radius:6px;padding:4px 10px;font-size:12px}
+.devnav button.active{background:var(--brand-2);color:#fff;border-color:var(--brand-2)}
+.view{display:none}
+.view.active{display:block}
+
+/* HERO — exact Figma spec */
+.hero{background:var(--bg-2);height:284px;position:relative;overflow:hidden}
+.hero-photo{position:absolute;right:0;top:0;height:284px;width:780px;background-size:cover;background-position:center top}
+.hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(-89.3deg,rgba(241,240,245,0) 11.3%,rgb(241,240,245) 99.8%)}
+.hero-content{position:relative;z-index:2;padding:32px 56px;display:flex;flex-direction:column;gap:16px;max-width:745px;height:100%}
+.hero-breadcrumb{display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:14px}
+.hero-breadcrumb .mi{font-size:20px}
+.hero-body{display:flex;flex-direction:column;gap:12px}
+.hero h1{font-size:28px;font-weight:600;line-height:32px;letter-spacing:-.84px;color:var(--text-1)}
+.hero-sub{font-size:14px;color:var(--text-2);line-height:24px;max-width:550px;letter-spacing:.056px}
+
+/* CONTENT AREA */
+.content-area{padding:24px 0;display:flex;gap:24px;align-items:flex-start;max-width:1135px;margin:0 auto;padding-left:56px;padding-right:32px;box-sizing:border-box}
+.content-area-wrap{padding:0 0 48px;background:var(--bg-1)}
+.col-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:24px}
+.col-aside{width:326px;flex-shrink:0}
+
+/* CARDS */
+.card{background:var(--bg-white);border-radius:8px;padding:24px 24px 32px;display:flex;flex-direction:column;gap:24px}
+.card-header{display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:16px;font-weight:600;color:var(--text-1);letter-spacing:-.064px}
+.card-subtitle{font-size:14px;color:var(--text-2);letter-spacing:.056px;margin-top:4px}
+
+/* EVENTS */
+.event-card{background:var(--bg-white);border:1px solid var(--border-1);border-radius:8px;padding:16px 24px;display:flex;flex-direction:column;gap:16px}
+.event-row{display:flex;align-items:center;gap:24px}
+.event-date-box{background:rgba(255,9,127,.05);border:1px solid var(--brand-3);border-radius:8px;padding:4px 12px;display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;min-width:52px}
+.event-date-box .dow{font-size:14px;color:var(--text-2);letter-spacing:.056px;line-height:24px}
+.event-date-box .dom{font-size:24px;font-weight:700;color:var(--text-1);line-height:24px}
+.event-date-box .mon{font-size:14px;color:var(--text-2);letter-spacing:.056px;line-height:24px}
+.event-divider{width:1px;background:var(--border-1);align-self:stretch;flex-shrink:0}
+.event-details{flex:1;display:flex;flex-direction:column;gap:8px}
+.event-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.event-title{font-size:16px;font-weight:500;color:var(--text-1);letter-spacing:-.16px}
+.event-meta{display:flex;gap:16px;flex-wrap:wrap}
+.event-meta-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-2);letter-spacing:.048px}
+.event-meta-item .mi{font-size:16px}
+.event-desc{font-size:14px;color:var(--text-2);line-height:24px;letter-spacing:.056px}
+
+/* ARTICLES GRID */
+.articles-grid{display:flex;gap:24px}
+.article-card{flex:1;min-width:0;display:flex;flex-direction:column;border-radius:8px;overflow:hidden}
+.article-img{height:128px;background-size:cover;background-position:center;border:1px solid var(--border-1);border-radius:8px}
+.article-body{padding:16px 0 20px;display:flex;flex-direction:column;gap:16px}
+.article-tag-row{}
+.article-title{font-size:16px;font-weight:600;color:var(--text-1);letter-spacing:-.064px;line-height:24px}
+.article-subtitle{font-size:14px;color:var(--text-2);letter-spacing:.056px;line-height:24px}
+
+/* D&B WIDGET */
+.widget{background:var(--bg-white);border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:32px}
+.widget-head{display:flex;flex-direction:column;gap:12px}
+.widget-title-row{display:flex;align-items:center;gap:8px}
+.widget-accent{width:3px;height:20px;background:#154A6B;border-radius:1px;flex-shrink:0}
+.widget-name{font-size:16px;font-weight:600;color:var(--text-1);letter-spacing:-.064px}
+.widget-desc{font-size:14px;color:var(--text-2);letter-spacing:.056px;line-height:24px}
+
+/* FOOTER */
+.footer{background:var(--bg-2);border-top:1px solid var(--border-1);padding:12px 0;display:flex;gap:64px;align-items:center;justify-content:center;font-size:12px;color:var(--text-2);letter-spacing:.048px}
+
+/* DASHBOARD MAX-WIDTH WRAPPER */
+.dashboard-inner{max-width:1135px;margin:0 auto;width:100%}
+.hero-inner{max-width:1135px;margin:0 auto;width:100%;height:100%;position:relative}
+
+/* COMMUNITY PROMO CARD on dashboard */
+.com-promo{background:#fff;border:1px solid #E5E4EC;border-radius:8px;padding:24px 24px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;position:relative;overflow:hidden}
+.com-promo-left{display:flex;flex-direction:column;gap:8px;position:relative;z-index:1;max-width:480px}
+.com-promo-new{display:inline-flex;align-items:center;justify-content:center;padding:2px 8px;background:#DCF5D6;border:1px solid #33841F;border-radius:4px;font-size:10px;font-weight:500;color:var(--text-1);text-transform:uppercase;letter-spacing:.4px;line-height:16px;align-self:flex-start}
+.com-promo h3{font-size:20px;font-weight:600;color:var(--text-1);letter-spacing:-.6px;line-height:32px;margin:0}
+.com-promo p{font-size:14px;font-weight:400;color:var(--text-1);line-height:24px;letter-spacing:.056px;margin:0}
+.com-promo-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 24px;border:1px solid var(--text-1);border-radius:8px;background:none;cursor:pointer;font-size:14px;font-weight:500;color:var(--text-1);letter-spacing:.7px;text-transform:uppercase;margin-top:4px;transition:border-color .15s,color .15s;font-family:inherit;white-space:nowrap;align-self:flex-start}
+.com-promo-btn:hover{border-color:#AA0285}
+.com-promo-btn img{width:20px;height:20px;display:block;flex-shrink:0}
+/* Right side: the entire mask group from Figma, corner-positioned */
+.com-promo-right{position:absolute;right:0;top:0;bottom:0;width:310px;pointer-events:none;overflow:hidden;border-radius:0 8px 8px 0}
+.com-promo-right svg{position:absolute;right:0;top:0;width:100%;height:100%}
+/* Avatars are absolutely placed inside .com-promo-right */
+.com-promo-av{position:absolute;width:65px;height:65px;border-radius:50%;border:2px solid #fff;overflow:hidden;box-shadow:0 1px 10px rgba(0,0,0,.08);object-fit:cover}
+
+/* COMMUNITY RESULT CARDS — exact Figma spec */
+.com-results-inner{max-width:1135px;margin:0 auto;width:100%}
+.com-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.com-card{background:#fff;border:1px solid #EBEBEE;border-radius:12px;display:flex;flex-direction:column;overflow:hidden;transition:box-shadow .15s,transform .15s}
+.com-card:hover{box-shadow:0 4px 20px rgba(28,48,75,.07);transform:translateY(-1px)}
+/* Header row */
+.com-card-header{background:#fff;padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EBEBEE}
+.com-card-mono{background:#F1F0F5;border-radius:16px;padding:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;font-weight:600;letter-spacing:-.064px;line-height:24px;white-space:nowrap}
+.com-card-name{font-size:16px;font-weight:600;color:var(--text-1);letter-spacing:-.064px;line-height:24px;white-space:nowrap}
+/* Body */
+.com-card-body{background:#fff;padding:24px;display:flex;flex-direction:column;gap:22px;flex:1}
+.com-card-content{display:flex;flex-direction:column;gap:16px;width:100%}
+.com-card-tagline{font-size:16px;font-weight:400;color:var(--text-2);line-height:24px;width:100%}
+.com-card-why{background:#F7F7FA;border-radius:8px;padding:16px;font-size:14px;font-weight:400;color:var(--text-2);line-height:24px;letter-spacing:.056px;width:100%}
+/* Divider */
+.com-card-divider{height:1px;background:#EBEBEE;width:100%;flex-shrink:0;margin:0}
+/* Footer */
+.com-card-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
+.com-card-meta{display:flex;align-items:center;gap:8px}
+.com-card-platform{display:flex;align-items:center;justify-content:center;padding:4px 16px;border-radius:16px;font-size:12px;font-weight:500;color:#fff;letter-spacing:.6px;text-transform:uppercase;line-height:16px;white-space:nowrap}
+.com-card-members{font-size:12px;font-weight:400;color:var(--text-2);letter-spacing:.048px;line-height:16px;white-space:nowrap}
+.com-card-visit{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 24px;border:1px solid #1C304B;border-radius:8px;background:none;font-size:14px;font-weight:500;color:#1C304B;letter-spacing:.7px;text-transform:uppercase;line-height:24px;text-decoration:none;white-space:nowrap;cursor:pointer;font-family:inherit;transition:border-color .15s;flex-shrink:0}
+.com-card-visit:hover{border-color:#AA0285}
+.com-card-visit img{width:20px;height:20px;display:block;flex-shrink:0}
+/* Platform pill colours — updated to match Figma */
+.pf-slack{background:#00659B}
+.pf-discord{background:#5865F2}
+.pf-meetup{background:#ED1C40}
+.pf-whatsapp{background:#25D366}
+.pf-circle{background:#1A1A1A}
+.pf-newsletter{background:#FF6719}
+.pf-forum{background:#3A3A4A}
+.pf-other{background:#6B6B7B}
+
+/* SEARCH SUMMARY (restate-before-commit) */
+.q-summary{background:#FBF4FA;border:1px solid var(--accent-100);border-radius:8px;padding:14px 18px;font-size:13px;color:var(--text-1);display:flex;align-items:center;gap:10px;line-height:20px}
+.q-summary .mi{color:var(--brand-2);font-size:18px;flex-shrink:0}
+
+/* EMPTY/LOW-RESULT NUDGE */
+.com-low-nudge{background:#FFF7E6;border:1px solid #FFD980;border-radius:8px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--text-1)}
+.com-low-nudge .mi{color:#A06200;flex-shrink:0}
+
+/* QUESTION VIEW */
+.q-wrap{background:var(--bg-1);min-height:calc(100vh - 109px);padding:24px 56px 48px;display:flex;flex-direction:column;gap:24px}
+.q-card{background:var(--bg-white);border-radius:8px;max-width:900px;margin:0 auto;width:100%;padding:40px;display:flex;flex-direction:column;gap:32px}
+.q-head{display:flex;flex-direction:column;gap:8px}
+.q-head h1{font-size:28px;font-weight:600;color:var(--text-1);letter-spacing:-.84px;line-height:36px}
+.q-head p{color:var(--text-2);font-size:15px}
+.tag-grid{display:flex;flex-wrap:wrap;gap:8px}
+.inp-field{display:flex;flex-direction:column;gap:8px;position:relative}
+.inp-label{font-size:12px;font-weight:400;color:var(--text-1);text-transform:uppercase;letter-spacing:1.5px;line-height:16px}
+.inp-wrap{display:flex;align-items:center;background:var(--bg-white);border:1px solid var(--border-input);border-radius:8px;transition:border-color .15s}
+.inp-wrap:focus-within{border-color:var(--brand-2)}
+.inp-wrap input{flex:1;border:none;outline:none;background:none;padding:16px;font-size:14px;line-height:24px;color:var(--text-1);letter-spacing:.056px;min-width:0}
+.inp-wrap input::placeholder{color:#5C6573}
+.inp-clear{width:20px;height:20px;display:none;align-items:center;justify-content:center;margin-right:12px;cursor:pointer;color:var(--text-2);flex-shrink:0}
+.inp-wrap:focus-within .inp-clear{display:flex}
+.ta-list{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg-white);border:1px solid var(--border-1);border-radius:8px;box-shadow:0 4px 16px rgba(28,48,75,.1);z-index:50;max-height:220px;overflow-y:auto;display:none}
+.ta-list.open{display:block}
+.ta-item{padding:12px 16px;font-size:14px;color:var(--text-1);cursor:pointer;display:flex;align-items:center;gap:8px}
+.ta-item:hover,.ta-item.focused{background:var(--bg-1)}
+.ta-item .mi{font-size:16px;color:var(--text-2)}
+.chip-input{border:1px solid var(--border-input);border-radius:8px;padding:10px 12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--bg-white);min-height:54px;cursor:text}
+.chip-input:focus-within{border-color:var(--brand-2)}
+.user-chip{background:#FCF7FB;border:1px solid var(--brand-2);color:var(--brand-2);border-radius:999px;padding:3px 4px 3px 12px;font-size:13px;display:inline-flex;align-items:center;gap:4px;line-height:20px}
+.user-chip button{color:var(--brand-2);font-size:14px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0;line-height:1}
+.user-chip button:hover{background:rgba(170,2,133,.12)}
+.chip-input input{border:none;outline:none;background:none;flex:1;min-width:160px;font-size:14px;color:var(--text-1);padding:6px 4px}
+.chip-input input::placeholder{color:var(--text-3)}
+.q-actions{display:flex;justify-content:flex-end;gap:12px;padding-top:8px}
+
+/* LOADING */
+.loading-wrap{background:var(--bg-1);min-height:calc(100vh - 109px);padding:48px 56px;display:flex;flex-direction:column;gap:32px;align-items:center}
+.loading-pill{background:var(--bg-white);border-radius:999px;padding:12px 24px;display:flex;align-items:center;gap:12px;color:var(--text-1);font-size:14px;font-weight:500;box-shadow:0 2px 8px rgba(28,48,75,.06)}
+.pulse-dot{width:10px;height:10px;border-radius:50%;background:var(--brand-2);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+.skel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;width:100%;max-width:1200px}
+.skel{background:var(--bg-white);border-radius:8px;padding:20px;height:280px;position:relative;overflow:hidden}
+.skel::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);animation:shimmer 1.6s infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.sk-l{background:var(--border-1);border-radius:4px;height:12px;margin-bottom:10px}
+.sk-c{width:48px;height:48px;border-radius:50%;background:var(--border-1);margin-bottom:16px}
+
+/* RESULTS */
+.results-wrap{background:var(--bg-1);min-height:calc(100vh - 109px);padding:24px 56px 48px}
+.back-link{display:inline-flex;align-items:center;gap:4px;color:var(--text-2);font-size:13px;text-decoration:none;margin-bottom:16px;cursor:pointer}
+.back-link .mi{font-size:18px}
+.results-head{margin-bottom:20px}
+.results-title{font-size:28px;font-weight:600;line-height:36px;letter-spacing:-.84px;color:var(--text-1);margin-bottom:6px}
+.results-framing{font-size:14px;color:var(--text-2);max-width:720px;line-height:22px}
+.filter-row{display:flex;gap:12px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
+.filter-label{font-size:12px;color:var(--text-2);text-transform:uppercase;letter-spacing:.6px;font-weight:500}
+.filter-group{display:flex;gap:8px}
+.results-count{margin-left:auto;font-size:13px;color:var(--text-2)}
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card-match{background:var(--bg-white);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:14px;transition:box-shadow .2s,transform .2s}
+.card-match:hover{box-shadow:0 4px 16px rgba(28,48,75,.08);transform:translateY(-2px)}
+.card-top{display:flex;gap:14px;align-items:flex-start}
+.avatar-lg{width:48px;height:48px;border-radius:50%;overflow:hidden;flex-shrink:0;background:#e5e7eb}
+.avatar-lg img{width:100%;height:100%;object-fit:cover;display:block}
+.person{flex:1;min-width:0}
+.person-name{font-size:16px;font-weight:600;color:var(--text-1);margin-bottom:2px}
+.person-title{font-size:13px;color:var(--text-2);line-height:18px}
+.person-loc{font-size:12px;color:var(--text-3);display:flex;align-items:center;gap:2px;margin-top:3px}
+.person-loc .mi{font-size:14px}
+.why-hero{font-size:13px;color:var(--text-1);line-height:19px}
+.anchor-chips{display:flex;flex-wrap:wrap;gap:6px}
+.card-action{margin-top:auto;padding-top:12px}
+.card-action .btn{width:100%}
+
+/* DRAWER */
+.overlay{position:fixed;inset:0;background:rgba(28,48,75,.5);opacity:0;pointer-events:none;transition:opacity .3s cubic-bezier(.4,0,.2,1);z-index:60}
+.overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;width:480px;height:100vh;background:var(--bg-white);transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;z-index:70;box-shadow:-8px 0 24px rgba(28,48,75,.12)}
+.drawer.open{transform:translateX(0)}
+.drawer-head{padding:20px 24px;border-bottom:1px solid var(--border-1);display:flex;gap:12px;align-items:center}
+.drawer-head .person{flex:1}
+.drawer-close{width:32px;height:32px;border-radius:50%;background:var(--bg-1);color:var(--text-1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.drawer-close:hover{background:var(--border-1)}
+.drawer-close .mi{font-size:18px}
+.drawer-body{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:24px}
+.drawer-sec{display:flex;flex-direction:column;gap:10px}
+.drawer-sec-label{font-size:11px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.8px}
+.goal-box{background:var(--accent-100);border-radius:8px;padding:14px 16px;color:var(--text-1);font-size:13px;line-height:19px}
+.goal-box strong{color:var(--accent-500)}
+.anchor-list{display:flex;flex-direction:column;gap:8px}
+.anchor-item{display:flex;gap:8px;font-size:13px;line-height:19px}
+.anchor-dot{color:var(--brand-2);flex-shrink:0;margin-top:2px;font-size:10px}
+.draft-textarea{width:100%;border:1px solid var(--border-input);border-radius:8px;padding:14px;font-size:13px;line-height:20px;color:var(--text-1);background:var(--bg-white);outline:none;resize:vertical;min-height:220px;transition:border-color .15s}
+.draft-textarea:focus{border-color:var(--brand-2);border-width:2px;padding:13px}
+.draft-tools{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.char-count{font-size:11px;color:var(--text-3)}
+.regen-btn{color:var(--brand-2);font-size:12px;font-weight:500;display:inline-flex;align-items:center;gap:4px;padding:4px 0}
+.regen-btn:hover{color:var(--hov);text-decoration:underline}
+.regen-btn .mi{font-size:14px}
+.regen-btn:disabled{opacity:.5}
+.drawer-foot{border-top:1px solid var(--border-1);padding:16px 24px;background:var(--bg-white);display:flex;flex-direction:column;gap:12px}
+.foot-btns{display:flex;gap:10px}
+.foot-btns .btn{flex:1}
+.mark-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-2);cursor:pointer;user-select:none}
+.mark-row input{appearance:none;width:16px;height:16px;border:1.5px solid var(--text-3);border-radius:3px;cursor:pointer;position:relative;flex-shrink:0}
+.mark-row input:checked{background:var(--brand-2);border-color:var(--brand-2)}
+.mark-row input:checked::after{content:"✓";position:absolute;top:-2px;left:1px;color:#fff;font-size:11px;font-weight:700}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text-1);color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:90;white-space:nowrap}
+.toast.show{opacity:1}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* TWO-STEP INTERESTS */
+.interests-step{display:flex;flex-direction:column;gap:12px}
+.interests-step-label{font-size:12px;color:var(--text-2);line-height:16px}
+.interests-domains{display:flex;gap:8px;flex-wrap:wrap}
+.interests-topics{display:flex;flex-direction:column;gap:12px;margin-top:8px;background:var(--bg-2);border-radius:10px;padding:16px;border-left:3px solid var(--brand-2)}
+.topics-heading{font-size:11px;font-weight:600;color:var(--brand-2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.topics-grid{display:flex;gap:8px;flex-wrap:wrap}
+.int-domain{font-weight:500;font-size:12px;line-height:16px;letter-spacing:.6px;text-transform:uppercase;padding:8px 16px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;border:1px solid var(--text-1);background:var(--chip-bg);color:var(--text-1);transition:all .15s;user-select:none}
+.int-domain:hover{background:#fff;border-color:var(--hov)}
+.int-domain.active{background:var(--chip-active);border-color:var(--pressed);color:var(--accent-500)}
+.int-domain .mi{font-size:14px}
+.int-topic{font-weight:500;font-size:12px;line-height:16px;letter-spacing:.5px;text-transform:none;padding:6px 14px;border-radius:20px;display:inline-flex;align-items:center;cursor:pointer;border:1.5px solid var(--border-1);background:var(--bg-white);color:var(--text-1);transition:all .15s;user-select:none}
+.int-topic:hover{border-color:var(--brand-2);color:var(--brand-2)}
+.int-topic.selected{background:var(--chip-active);border-color:var(--pressed);color:var(--accent-500);font-weight:600}
+.int-topic.disabled:not(.selected){opacity:.35;cursor:default;pointer-events:none}
+.sel-chips{display:flex;flex-wrap:wrap;gap:6px;min-height:28px}
+.sel-chip{background:var(--chip-active);border:1px solid var(--pressed);color:var(--accent-500);border-radius:999px;padding:3px 4px 3px 12px;font-size:12px;display:inline-flex;align-items:center;gap:4px;line-height:20px;font-weight:500}
+.sel-chip button{color:var(--accent-500);font-size:13px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0;line-height:1}
+.sel-chip button:hover{background:rgba(79,24,90,.12)}
+.topics-anim{animation:fadeSlide .2s ease}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- SIDEBAR — exact Figma -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="https://www.figma.com/api/mcp/asset/6be9544d-1d74-4080-a03e-919611a58056" alt="LHH Career Studio">
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-item"><img src="https://www.figma.com/api/mcp/asset/66eca1b6-884d-4745-8cba-6a84bba325f9" alt="">Home</div>
+        <div class="nav-item"><img src="https://www.figma.com/api/mcp/asset/0d8cdba7-5367-4e53-9c9f-4ac4d8892590" alt="">Jobs</div>
+        <div class="nav-item"><img src="https://www.figma.com/api/mcp/asset/601918ab-b5ef-4383-a24d-805a0e8b007b" alt="">Resume</div>
+        <div class="nav-item"><img src="https://www.figma.com/api/mcp/asset/b987fd16-1353-4978-be78-4ace1aab185d" alt="">Live events</div>
+        <div class="nav-item"><img src="https://www.figma.com/api/mcp/asset/17c55e6a-3744-4d11-8ed0-b853ffeaabfd" alt="">Roadmap</div>
+        <div class="nav-item"><img src="https://www.figma.com/api/mcp/asset/bab910b7-b4d5-4b7c-94f1-bdb7cc4f0884" alt="">Content</div>
+        <div class="nav-item"><img src="https://www.figma.com/api/mcp/asset/20d82069-5b42-46f6-abed-595a7fa05717" alt="">Coaching</div>
+        <div class="nav-item active"><img src="https://www.figma.com/api/mcp/asset/b62495c3-6cb6-495b-af90-26bf0a239e7b" alt="">Networking</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-item"><img src="https://www.figma.com/api/mcp/asset/cd4a693e-22fa-46fa-bb20-8f4ba2787238" alt="">Log out</div>
+      </div>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="search">
+        <span class="mi">search</span>
+        <input placeholder="Search">
+      </div>
+      <button class="topbar-icon"><span class="mi">bookmark_border</span></button>
+      <div class="topbar-sep"></div>
+      <div class="topbar-profile">
+        <div class="avatar-tb"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&q=80" alt="Patrick D."></div>
+        <div class="profile-name">Patrick D.<span class="mi">arrow_drop_down</span></div>
+      </div>
+    </header>
+
+    <!-- DEV NAV -->
+    <div class="devnav">
+      <span class="devnav-label">Dev nav:</span>
+      <button onclick="setView(1)" data-vn="1" class="active">1. Dashboard</button>
+      <button onclick="setView(2)" data-vn="2">2. Question</button>
+      <button onclick="setView(3)" data-vn="3">3. Loading</button>
+      <button onclick="setView(4)" data-vn="4">4. Results</button>
+      <button onclick="setView(5)" data-vn="5">5. Com. Question</button>
+      <button onclick="setView(6)" data-vn="6">6. Com. Loading</button>
+      <button onclick="setView(7)" data-vn="7">7. Com. Results</button>
+    </div>
+
+    <!-- VIEW 1: DASHBOARD -->
+    <section class="view active" data-v="1">
+      <div class="hero">
+        <div class="hero-photo" style="background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=85')"></div>
+        <div class="hero-content">
+          <div class="hero-breadcrumb">
+            <span class="mi" style="font-size:20px">stream</span>
+            <span>Networking</span>
+          </div>
+          <div class="hero-body">
+            <h1>Meet the people who are hiring for someone like you.</h1>
+            <p class="hero-sub">We'll match you with hiring managers and recruiters in your preferred industries — so you can build meaningful connections that open doors.</p>
+            <div class="hero-cta-group">
+              <button class="btn btn-primary" style="width:282px;margin-bottom:40px" onclick="setView(2)">FIND YOUR MATCHES</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-area-wrap">
+        <div class="content-area">
+        <div class="col-main">
+          <!-- COMMUNITY PROMO -->
+          <div class="com-promo">
+            <div class="com-promo-left">
+              <span class="com-promo-new">New!</span>
+              <h3>Join the rooms where your peers already are.</h3>
+              <p>Active communities matched to your role, industry and city.</p>
+              <button class="com-promo-btn" onclick="setView(5)">
+                FIND MY COMMUNITIES
+                <img src="https://www.figma.com/api/mcp/asset/a0ea8deb-e38b-4768-ba70-ba88e8b76b96" alt="">
+              </button>
+            </div>
+            <!-- Right: orb clipped to corner + 3 avatars, matching Figma geometry -->
+            <div class="com-promo-right">
+              <svg viewBox="0 0 310 204" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMaxYMid meet" style="position:absolute;inset:0;width:100%;height:100%">
+                <!-- Large pale orb — bleeds off right edge, clipped by overflow:hidden on parent -->
+                <ellipse cx="230" cy="175" rx="210" ry="210" fill="url(#orbGrad)" opacity="0.85"/>
+                <!-- Small dot accents -->
+                <circle cx="42" cy="15" r="5" fill="#9B8CC4" opacity="0.5"/>
+                <circle cx="296" cy="10" r="3" fill="#9B8CC4" opacity="0.35"/>
+                <circle cx="258" cy="155" r="2" fill="#9B8CC4" opacity="0.3"/>
+                <defs>
+                  <radialGradient id="orbGrad" cx="35%" cy="35%" r="60%" gradientUnits="objectBoundingBox">
+                    <stop offset="0%" stop-color="#EDE8F5"/>
+                    <stop offset="70%" stop-color="#E4DFF0"/>
+                    <stop offset="100%" stop-color="#E4DFF0" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+              </svg>
+              <!-- Avatars: positioned to match Figma — av1 top-right, av2 bottom-left, av3 right -->
+              <img class="com-promo-av" style="left:64px;top:26px"   src="https://www.figma.com/api/mcp/asset/1eebc619-0c0f-4269-8698-714bd264369b" alt="">
+              <img class="com-promo-av" style="left:0px;top:76px"    src="https://www.figma.com/api/mcp/asset/e40d11e2-201b-4038-b9d7-b88effbecc39" alt="">
+              <img class="com-promo-av" style="left:148px;top:48px"  src="https://www.figma.com/api/mcp/asset/052e40c3-35ef-4e82-955c-2ceffe462444" alt="">
+            </div>
+          </div>
+
+          <!-- EVENTS CARD -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Networking events</div>
+              <button class="link-btn">VIEW ALL</button>
+            </div>
+            <div id="events-list" style="display:flex;flex-direction:column;gap:24px"></div>
+          </div>
+
+          <!-- ARTICLES CARD -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">More on networking</div>
+                <div class="card-subtitle">Practical networking guidance to support your job search</div>
+              </div>
+              <button class="link-btn">VIEW ALL</button>
+            </div>
+            <div class="articles-grid" id="articles-list"></div>
+          </div>
+        </div>
+
+        <!-- ASIDE -->
+        <aside class="col-aside">
+          <div class="widget">
+            <div class="widget-head">
+              <div class="widget-title-row">
+                <div class="widget-accent"></div>
+                <div class="widget-name">D&amp;B Hoovers</div>
+              </div>
+              <p class="widget-desc">Power your job search with up-to-date industry insights.</p>
+            </div>
+            <button class="btn btn-secondary btn-full">EXPLORE NOW</button>
+          </div>
+        </aside>
+      </div>
+      </div><!-- /content-area-wrap -->
+
+      <div class="footer">
+        <span>Copyright @ 2024 LHH. All Rights Reserved</span>
+        <span>Privacy policy</span>
+        <span>Terms &amp; conditions</span>
+        <span>Cookie policy</span>
+      </div>
+    </section>
+
+    <!-- VIEW 2: QUESTION -->
+    <section class="view" data-v="2">
+      <div class="q-wrap">
+        <div class="hero-breadcrumb" style="padding:0 0 8px">
+          <span class="mi">stream</span><span>Networking</span>
+          <span style="color:var(--text-3);margin:0 4px">›</span>
+          <span style="color:var(--brand-2)">Find matches</span>
+        </div>
+        <div class="q-card">
+          <div class="q-head">
+            <h1>Tell us what you're looking for</h1>
+            <p>We'll use this to find the 10 people most likely to move your search forward.</p>
+          </div>
+          <!-- Target job title -->
+          <div class="inp-field">
+            <label class="inp-label">Target job title</label>
+            <div class="inp-wrap">
+              <input id="f-title" value="VP of Marketing" placeholder="VP of Marketing">
+              <span class="inp-clear mi" style="display:none" onclick="this.previousElementSibling.value='';this.previousElementSibling.focus()">close</span>
+            </div>
+          </div>
+
+          <!-- Industries -->
+          <div class="inp-field">
+            <label class="inp-label">Industries</label>
+            <p style="font-size:12px;color:var(--text-2);margin-top:-2px">Select all that apply.</p>
+            <div class="tag-grid" id="industries-tags"></div>
+          </div>
+
+          <!-- Target location -->
+          <div class="inp-field" id="loc-field" style="position:relative">
+            <label class="inp-label">Target location</label>
+            <div class="inp-wrap">
+              <input id="f-loc" value="London, UK" placeholder="City or region" autocomplete="off"
+                oninput="onLocInput(this.value)" onfocus="onLocInput(this.value)" onkeydown="onLocKey(event)">
+              <span class="inp-clear mi" id="loc-clear" style="display:flex" onclick="clearLoc()">close</span>
+            </div>
+            <div class="ta-list" id="loc-list"></div>
+          </div>
+
+          <!-- Professional interests — two-step -->
+          <div class="inp-field">
+            <label class="inp-label">Professional interests</label>
+            <p style="font-size:12px;color:var(--text-2);margin-top:-2px">Choose up to 6. Start by picking a domain.</p>
+            <div class="interests-step">
+              <div class="interests-domains" id="int-domains"></div>
+              <div class="interests-topics" id="int-topics" style="display:none"></div>
+              <div id="int-selected-row" style="display:none">
+                <div style="font-size:11px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Selected <span id="int-count">0</span>/6</div>
+                <div class="sel-chips" id="int-sel-chips"></div>
+              </div>
+            </div>
+          </div>
+          <div class="q-actions">
+            <button class="btn btn-secondary" onclick="setView(1)">CANCEL</button>
+            <button class="btn btn-primary" onclick="startLoading()">GENERATE MATCHES</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: LOADING -->
+    <section class="view" data-v="3">
+      <div class="loading-wrap">
+        <div class="loading-pill">
+          <div class="pulse-dot"></div>
+          <span id="loading-msg">Scanning profiles across your target industries...</span>
+        </div>
+        <div class="skel-grid">
+          <div class="skel"><div class="sk-c"></div><div class="sk-l" style="width:60%"></div><div class="sk-l" style="width:40%"></div><div class="sk-l" style="width:80%;margin-top:20px"></div><div class="sk-l" style="width:70%"></div></div>
+          <div class="skel"><div class="sk-c"></div><div class="sk-l" style="width:70%"></div><div class="sk-l" style="width:45%"></div><div class="sk-l" style="width:85%;margin-top:20px"></div><div class="sk-l" style="width:60%"></div></div>
+          <div class="skel"><div class="sk-c"></div><div class="sk-l" style="width:55%"></div><div class="sk-l" style="width:38%"></div><div class="sk-l" style="width:75%;margin-top:20px"></div><div class="sk-l" style="width:65%"></div></div>
+          <div class="skel"><div class="sk-c"></div><div class="sk-l" style="width:65%"></div><div class="sk-l" style="width:42%"></div><div class="sk-l" style="width:80%;margin-top:20px"></div><div class="sk-l" style="width:55%"></div></div>
+          <div class="skel"><div class="sk-c"></div><div class="sk-l" style="width:58%"></div><div class="sk-l" style="width:48%"></div><div class="sk-l" style="width:72%;margin-top:20px"></div><div class="sk-l" style="width:68%"></div></div>
+          <div class="skel"><div class="sk-c"></div><div class="sk-l" style="width:62%"></div><div class="sk-l" style="width:36%"></div><div class="sk-l" style="width:78%;margin-top:20px"></div><div class="sk-l" style="width:52%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: RESULTS -->
+    <section class="view" data-v="4">
+      <div class="results-wrap">
+        <div class="back-link" onclick="setView(2)"><span class="mi">arrow_back</span>Edit search</div>
+        <div class="results-head">
+          <div class="results-title">Your matches</div>
+          <p class="results-framing">Based on your goals, these 10 people are most likely to move your search forward this month — hiring managers and recruiters, ordered by relevance.</p>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">Show</span>
+          <div class="filter-group" id="filters">
+            <button class="ds-chip ds-chip-sm active" data-filter="all">All</button>
+            <button class="ds-chip ds-chip-sm" data-filter="hiring">Hiring managers</button>
+            <button class="ds-chip ds-chip-sm" data-filter="recruiter">Recruiters</button>
+          </div>
+          <span class="results-count" id="count"></span>
+        </div>
+        <div class="results-grid" id="results-grid"></div>
+      </div>
+    </section>
+
+    <!-- VIEW 5: COMMUNITY QUESTION -->
+    <section class="view" data-v="5">
+      <div class="q-wrap">
+        <div class="hero-breadcrumb" style="padding:0 0 8px">
+          <span class="mi">stream</span><span>Networking</span>
+          <span style="color:var(--text-3);margin:0 4px">›</span>
+          <span style="color:var(--brand-2)">Find communities</span>
+        </div>
+        <div class="q-card">
+          <div class="q-head">
+            <h1>Find your communities.</h1>
+            <p>Tell us where you are professionally — we'll surface 5–6 active groups worth joining.</p>
+          </div>
+
+          <!-- Job title -->
+          <div class="inp-field">
+            <label class="inp-label">Your role</label>
+            <div class="inp-wrap">
+              <input id="cf-title" value="Product Manager" placeholder="e.g. Product Manager">
+              <span class="inp-clear mi" style="display:none" onclick="this.previousElementSibling.value='';this.previousElementSibling.focus();renderQSummary()">close</span>
+            </div>
+          </div>
+
+          <!-- Industries -->
+          <div class="inp-field">
+            <label class="inp-label">Industry focus</label>
+            <p style="font-size:12px;color:var(--text-2);margin-top:-2px">Pick up to 2. More selections produce more generic results.</p>
+            <div class="tag-grid" id="com-industries-tags"></div>
+          </div>
+
+          <!-- Location -->
+          <div class="inp-field" id="cloc-field" style="position:relative">
+            <label class="inp-label">City or region</label>
+            <div class="inp-wrap">
+              <input id="cf-loc" value="London, UK" placeholder="City or region" autocomplete="off"
+                oninput="onCLocInput(this.value)" onfocus="onCLocInput(this.value)" onkeydown="onCLocKey(event)">
+              <span class="inp-clear mi" id="cloc-clear" style="display:flex" onclick="clearCLoc()">close</span>
+            </div>
+            <div class="ta-list" id="cloc-list"></div>
+          </div>
+
+          <!-- Restate-before-commit summary -->
+          <div class="q-summary" id="q-summary">
+            <span class="mi">search</span>
+            <span id="q-summary-text"></span>
+          </div>
+
+          <div class="q-actions">
+            <button class="btn btn-secondary" onclick="setView(1)">CANCEL</button>
+            <button class="btn btn-primary" onclick="startComLoading()">FIND MY COMMUNITIES</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 6: COMMUNITY LOADING -->
+    <section class="view" data-v="6">
+      <div class="loading-wrap">
+        <div class="loading-pill">
+          <div class="pulse-dot"></div>
+          <span id="com-loading-msg">Scanning communities in your area...</span>
+        </div>
+        <div class="skel-grid" style="grid-template-columns:repeat(2,1fr);max-width:1135px">
+          <!-- Each skeleton mirrors: header (mono tile + name) / divider / tagline / why box / divider / footer -->
+          <div class="skel" style="padding:0;height:auto;border-radius:12px;display:flex;flex-direction:column;overflow:hidden">
+            <div style="padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EBEBEE">
+              <div class="sk-l" style="width:44px;height:44px;border-radius:16px;margin:0;flex-shrink:0"></div>
+              <div class="sk-l" style="width:45%;height:16px;margin:0"></div>
+            </div>
+            <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div class="sk-l" style="width:100%;height:14px;margin:0"></div>
+                <div class="sk-l" style="width:80%;height:14px;margin:0"></div>
+              </div>
+              <div class="sk-l" style="width:100%;height:72px;margin:0;border-radius:8px"></div>
+              <div style="height:1px;background:#EBEBEE;margin:4px 0"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div class="sk-l" style="width:72px;height:24px;margin:0;border-radius:16px"></div>
+                <div class="sk-l" style="width:96px;height:36px;margin:0;border-radius:8px"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skel" style="padding:0;height:auto;border-radius:12px;display:flex;flex-direction:column;overflow:hidden">
+            <div style="padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EBEBEE">
+              <div class="sk-l" style="width:44px;height:44px;border-radius:16px;margin:0;flex-shrink:0"></div>
+              <div class="sk-l" style="width:55%;height:16px;margin:0"></div>
+            </div>
+            <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div class="sk-l" style="width:100%;height:14px;margin:0"></div>
+                <div class="sk-l" style="width:70%;height:14px;margin:0"></div>
+              </div>
+              <div class="sk-l" style="width:100%;height:72px;margin:0;border-radius:8px"></div>
+              <div style="height:1px;background:#EBEBEE;margin:4px 0"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div class="sk-l" style="width:80px;height:24px;margin:0;border-radius:16px"></div>
+                <div class="sk-l" style="width:96px;height:36px;margin:0;border-radius:8px"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skel" style="padding:0;height:auto;border-radius:12px;display:flex;flex-direction:column;overflow:hidden">
+            <div style="padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EBEBEE">
+              <div class="sk-l" style="width:44px;height:44px;border-radius:16px;margin:0;flex-shrink:0"></div>
+              <div class="sk-l" style="width:40%;height:16px;margin:0"></div>
+            </div>
+            <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div class="sk-l" style="width:100%;height:14px;margin:0"></div>
+                <div class="sk-l" style="width:85%;height:14px;margin:0"></div>
+              </div>
+              <div class="sk-l" style="width:100%;height:72px;margin:0;border-radius:8px"></div>
+              <div style="height:1px;background:#EBEBEE;margin:4px 0"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div class="sk-l" style="width:88px;height:24px;margin:0;border-radius:16px"></div>
+                <div class="sk-l" style="width:96px;height:36px;margin:0;border-radius:8px"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skel" style="padding:0;height:auto;border-radius:12px;display:flex;flex-direction:column;overflow:hidden">
+            <div style="padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EBEBEE">
+              <div class="sk-l" style="width:44px;height:44px;border-radius:16px;margin:0;flex-shrink:0"></div>
+              <div class="sk-l" style="width:50%;height:16px;margin:0"></div>
+            </div>
+            <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div class="sk-l" style="width:100%;height:14px;margin:0"></div>
+                <div class="sk-l" style="width:75%;height:14px;margin:0"></div>
+              </div>
+              <div class="sk-l" style="width:100%;height:72px;margin:0;border-radius:8px"></div>
+              <div style="height:1px;background:#EBEBEE;margin:4px 0"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div class="sk-l" style="width:76px;height:24px;margin:0;border-radius:16px"></div>
+                <div class="sk-l" style="width:96px;height:36px;margin:0;border-radius:8px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 7: COMMUNITY RESULTS -->
+    <section class="view" data-v="7">
+      <div class="results-wrap">
+        <div class="com-results-inner">
+          <div class="back-link" onclick="setView(5)"><span class="mi">arrow_back</span>Edit search</div>
+          <div class="results-head">
+            <div class="results-title">Your communities</div>
+            <p class="results-framing" id="com-results-framing">Active groups where peers in your role and industry actually show up.</p>
+          </div>
+          <div class="filter-row">
+            <span class="filter-label">Platform</span>
+            <div class="filter-group" id="com-filters"></div>
+            <span class="results-count" id="com-count"></span>
+          </div>
+          <div id="com-low-nudge-slot"></div>
+          <div class="com-grid" id="com-grid"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- DRAWER -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div class="avatar-lg" id="dr-av"></div>
+    <div class="person">
+      <div class="person-name" id="dr-name"></div>
+      <div class="person-title" id="dr-title"></div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()"><span class="mi">close</span></button>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-sec">
+      <div class="drawer-sec-label">The goal</div>
+      <div class="goal-box" id="dr-goal"></div>
+    </div>
+    <div class="drawer-sec">
+      <div class="drawer-sec-label">Shared anchors</div>
+      <div class="anchor-list" id="dr-anchors"></div>
+    </div>
+    <div class="drawer-sec">
+      <div class="drawer-sec-label">Draft outreach — edit freely</div>
+      <textarea class="draft-textarea" id="dr-draft" oninput="updateCharCount()"></textarea>
+      <div class="draft-tools">
+        <span class="char-count" id="char-count">0 characters</span>
+        <button class="regen-btn" id="regen-btn" onclick="regenerateDraft()"><span class="mi">refresh</span>Regenerate</button>
+      </div>
+    </div>
+  </div>
+  <div class="drawer-foot">
+    <label class="mark-row">
+      <input type="checkbox" id="mark-contacted" onchange="toggleContacted()">
+      <span id="contacted-label">Mark as contacted when I send this</span>
+    </label>
+    <div class="foot-btns">
+      <button class="btn btn-secondary" onclick="window.open('#','_blank')">Open LinkedIn</button>
+      <button class="btn btn-primary" onclick="copyMessage()"><span class="mi">content_copy</span>Copy message</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const AVATARS={1:"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=96&q=80",2:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&q=80",3:"https://images.unsplash.com/photo-1580489944761-15a19d654956?w=96&q=80",4:"https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=96&q=80",5:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&q=80",6:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=96&q=80",7:"https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=96&q=80",8:"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&q=80",9:"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=96&q=80",10:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=96&q=80"};
+const CONTACTS=[
+  {id:1,type:"hiring",name:"Sarah Chen",initials:"SC",avatarColor:"#6B46C1",title:"VP of Marketing",company:"Stripe",location:"London, UK",tags:["B2B SaaS","Growth marketing","Product-led"],whyConnect:"Sarah recently led Stripe's EMEA go-to-market expansion — your international launch background maps directly to what her team is solving this quarter.",goal:"a genuine exchange about <strong>scaling marketing teams in EMEA</strong>. Ask questions, listen — don't pitch.",anchors:["You both studied at London Business School (she 2011, you 2013).","Overlapped at Meta EMEA 2018–2020.","She wrote a recent piece on product-led growth in payments."],draft:`Hi Sarah,\n\nI came across your recent piece on product-led growth in payments — the point on self-serve activation really landed. I'm a fellow LBS grad, and I think we overlapped at Meta EMEA for a stretch.\n\nI'm stepping into my next chapter in marketing leadership and would value 20 minutes to hear how you're thinking about Stripe's EMEA playbook.\n\nHappy to work around your schedule.\n\nBest,\nPatrick`},
+  {id:2,type:"hiring",name:"Marcus Thompson",initials:"MT",avatarColor:"#0D7CC9",title:"Director of Brand",company:"Unilever",location:"London, UK",tags:["FMCG","Brand building","Sustainability"],whyConnect:"Marcus is actively hiring a senior brand lead. His focus on sustainable brand positioning aligns with your Innocent Drinks work.",goal:"a genuine exchange about <strong>sustainable brand positioning in FMCG</strong>. Ask questions, listen — don't pitch.",anchors:["You both spoke at Cannes Lions 2023.","Shared connection: Amelia Okonkwo, a former Innocent colleague.","He recently moved from Diageo to Unilever."],draft:`Hi Marcus,\n\nAmelia Okonkwo mentioned your name when we caught up last week — she spoke highly of how you ran brand at Diageo. Congrats on the Unilever move.\n\nI'm exploring senior brand roles in FMCG with a sustainability lens. Your Cannes point on "proof over promise" has stuck with me. Would you have 20 minutes to share how you're thinking about the role brand plays in Unilever's next chapter?\n\nGrateful either way.\n\nPatrick`},
+  {id:3,type:"hiring",name:"Priya Raman",initials:"PR",avatarColor:"#D946AB",title:"Head of Growth",company:"Wise",location:"London, UK",tags:["Fintech","Growth","B2C"],whyConnect:"Priya has been vocal about hiring marketers who understand cross-border commerce — your two years at Remitly sit in that exact overlap.",goal:"a genuine exchange about <strong>growth marketing in cross-border fintech</strong>. Ask questions, listen — don't pitch.",anchors:["You both previously worked at Remitly (different teams, overlapping 2021).","Active in Female Founders in Fintech.","Recent podcast on acquisition economics."],draft:`Hi Priya,\n\nWe overlapped at Remitly in 2021 — different teams, but I always admired how your side of the house approached onboarding.\n\nI listened to your recent episode on acquisition economics and found the framing on LTV caps really useful. I'm exploring my next growth role and would value 20 minutes to hear how you're thinking about the space from Wise.\n\nOpen to whatever timing works.\n\nBest,\nPatrick`},
+  {id:4,type:"hiring",name:"James O'Connor",initials:"JO",avatarColor:"#F59E0B",title:"Head of Demand Gen",company:"HubSpot",location:"Dublin, IE",tags:["SaaS","Demand gen","Content-led"],whyConnect:"James writes publicly about content-led demand generation — one of your stated interests. HubSpot Dublin is hiring for a senior role.",goal:"a genuine exchange about <strong>content-led demand generation at scale</strong>. Ask questions, listen — don't pitch.",anchors:["You both worked with the same fractional CMO (Emma Chen) in 2022.","He published a SaaS playbook you referenced at your last role.","Both active in the Demand Curve community."],draft:`Hi James,\n\nEmma Chen and I both leaned on you indirectly — I picked up her playbook after you helped shape it in 2022, and it reshaped how I thought about demand at my last role.\n\nI'm now looking at my next chapter. Your view on content-led demand is rare and useful. Could I steal 20 minutes to hear where you're taking the HubSpot team?\n\nHappy to work around your schedule.\n\nPatrick`},
+  {id:5,type:"hiring",name:"Elena Volkova",initials:"EV",avatarColor:"#EF4444",title:"VP Marketing",company:"Klarna",location:"Stockholm, SE",tags:["Fintech","Consumer brand","Retail"],whyConnect:"Elena has led three consumer brand launches in fintech. Her recent Slush talk on retail-adjacent positioning is directly relevant to the roles you're targeting.",goal:"a genuine exchange about <strong>consumer brand positioning in fintech</strong>. Ask questions, listen — don't pitch.",anchors:["Her recent Slush talk on retail-adjacent brand resonates with your angle.","Shared involvement with Women in Fintech London.","Both mentored at On Deck."],draft:`Hi Elena,\n\nYour Slush talk on retail-adjacent brand in fintech is the clearest articulation I've heard of something I've been trying to put into words for months.\n\nI'm exploring senior marketing leadership roles across European fintech and would value 20 minutes to hear what's top of mind for you at Klarna. No agenda beyond learning.\n\nGrateful either way.\n\nPatrick`},
+  {id:6,type:"hiring",name:"David Park",initials:"DP",avatarColor:"#10B981",title:"Head of Marketing",company:"Notion",location:"Remote (UK)",tags:["Product-led","Community","SaaS"],whyConnect:"David runs a community-led motion at Notion. Your interest in product-led growth and his community-as-channel approach could make for a rich conversation.",goal:"a genuine exchange about <strong>community-led product marketing</strong>. Ask questions, listen — don't pitch.",anchors:["He co-hosts the Product-Led Summit, which you attended.","You both worked at Atlassian in different years.","Shared contact: Rachel Kim at Figma."],draft:`Hi David,\n\nI was at the Product-Led Summit last year and your session on community-as-channel stayed with me — especially the bit on signal-to-noise curation.\n\nI'm a former Atlassian exploring my next PMM role with a community angle. Rachel Kim suggested I reach out. Any chance of 20 minutes to hear how you're thinking about the motion at Notion?\n\nHappy to work around you.\n\nPatrick`},
+  {id:7,type:"recruiter",name:"Nina Patel",initials:"NP",avatarColor:"#8B5CF6",title:"Partner",company:"Heidrick & Struggles",location:"London, UK",tags:["Exec search","Marketing leaders","FMCG"],whyConnect:"Nina specialises in CMO-level searches across European FMCG and consumer tech — regularly placing VP Marketing roles in your target range.",goal:"a genuine exchange about <strong>the CMO search landscape in European FMCG</strong>. Ask questions, listen — don't pitch.",anchors:["She placed your colleague Tom Reeves at Reckitt.","Active on the LHH alumni network.","Recent post on what sets VP candidates apart in 2026."],draft:`Hi Nina,\n\nTom Reeves spoke highly of how you ran his Reckitt process last year — said the prep you did on him was the best he'd seen from a search firm.\n\nI'm an LHH alumnus now exploring VP Marketing roles in FMCG. I'd love 20 minutes to hear how you're seeing the market, particularly the sustainability-forward briefs. No ask beyond your read.\n\nGrateful either way.\n\nPatrick`},
+  {id:8,type:"recruiter",name:"Oliver Bennett",initials:"OB",avatarColor:"#06B6D4",title:"Principal",company:"Egon Zehnder",location:"London, UK",tags:["Exec search","B2B tech","SaaS"],whyConnect:"Oliver focuses on senior marketing placements in B2B SaaS across the UK. He has active mandates in your target segment.",goal:"a genuine exchange about <strong>senior B2B SaaS marketing mandates</strong>. Ask questions, listen — don't pitch.",anchors:["You shared a table at SaaStr London last October.","He publishes a quarterly B2B marketing hiring report.","Mutual contact: Fatima Al-Sayed."],draft:`Hi Oliver,\n\nWe shared a table at the SaaStr dinner last October — the one where the Stripe team made the case for pricing-as-product. I've been meaning to reach out since.\n\nI'm at the exploration stage of my next senior marketing role in B2B SaaS, and your hiring trends report is one of the sharpest reads I get. Would 20 minutes work for a catch-up?\n\nFatima Al-Sayed says hi.\n\nBest,\nPatrick`},
+  {id:9,type:"recruiter",name:"Mei Tanaka",initials:"MT",avatarColor:"#EC4899",title:"Senior TA Partner",company:"Google",location:"London, UK",tags:["In-house TA","Tech","Marketing"],whyConnect:"Mei leads marketing and brand hiring for Google EMEA and looks for leaders with cross-market launch experience — exactly your profile.",goal:"a genuine exchange about <strong>in-house marketing leadership hiring at Google</strong>. Ask questions, listen — don't pitch.",anchors:["You both worked at Booking.com between 2017 and 2019.","She runs a monthly alumni meetup.","Priya Nair is a mutual connection."],draft:`Hi Mei,\n\nWe overlapped briefly at Booking.com around 2018 — different teams but a lot of shared hallways. Priya Nair sends her regards and mentioned you'd be the right person to talk to.\n\nI'm exploring my next senior marketing role and Google EMEA is high on my list. Would 20 minutes work to hear how you're thinking about the bar?\n\nGrateful either way.\n\nPatrick`},
+  {id:10,type:"recruiter",name:"Lucas Ribeiro",initials:"LR",avatarColor:"#F97316",title:"Director, Executive Search",company:"Russell Reynolds",location:"London, UK",tags:["Exec search","Consumer","Retail"],whyConnect:"Lucas runs searches for consumer and retail CMO roles. A conversation puts you on his radar for upcoming briefs that fit your profile.",goal:"a genuine exchange about <strong>consumer and retail marketing leadership</strong>. Ask questions, listen — don't pitch.",anchors:["He wrote on the evolving CMO role in luxury retail.","Shared alma mater — INSEAD.","Active in Marketing Academy London."],draft:`Hi Lucas,\n\nYour recent piece on the evolving CMO role in luxury retail was a useful frame — the "curator vs. operator" split in particular.\n\nI'm a fellow INSEAD alum exploring senior marketing roles in consumer and retail. Would 20 minutes work for a grounded conversation about the market? I'd value your perspective and won't waste your time.\n\nHappy around your schedule.\n\nPatrick`}
+];
+const EVENTS=[
+  {dow:"Tue",dom:"11",mon:"MAR",title:"Unlocking Your Potential",live:true,time:"15:15 PM - 16:30 PM",loc:"Online",desc:"Discover strategies to maximize your networking potential and build lasting professional relationships."},
+  {dow:"Thu",dom:"13",mon:"MAR",title:"Advocating for Your Career",live:false,time:"15:15 PM - 16:30 PM",loc:"Online",desc:"Learn how to champion your career goals and navigate workplace dynamics effectively."},
+  {dow:"Fri",dom:"20",mon:"MAR",title:"Ace Your Next Interview",live:false,time:"15:15 PM - 16:30 PM",loc:"Online",desc:"Master the art of self-promotion and excel in any professional setting."}
+];
+const ARTICLES=[
+  {img:"https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=320&q=80",title:"The power of relationships in times of change",sub:"How relationships can be a powerful anchor during transition"},
+  {img:"https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=320&q=80",title:"Networking for smart career choices",sub:"Having conversations to make more confident career decisions"},
+  {img:"https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=320&q=80",title:"Structuring your networking conversations",sub:"A simple approach to networking with intention"}
+];
+const IND_CORE=["Technology","FMCG","Healthcare","Finance","Consulting","Luxury & Retail"];
+const LOAD_MSGS=["Scanning profiles across your target industries...","Identifying shared anchors and conversation hooks...","Ranking by relevance to your background...","Finalising your personalised match list..."];
+let selInd=new Set(["Technology","FMCG"]),selInterests=new Set();
+let activeFilter="all",loadTimer=null,curId=null,contacted=new Set();
+
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function setView(n){
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",+v.dataset.v===n));
+  document.querySelectorAll(".devnav button").forEach(b=>b.classList.toggle("active",+b.dataset.vn===n));
+  window.scrollTo(0,0);
+  if(n===3)startLoading();
+  if(n===4)renderResults();
+}
+function renderEvents(){
+  document.getElementById("events-list").innerHTML=EVENTS.map(e=>`
+    <div class="event-card">
+      <div class="event-row">
+        <div class="event-date-box"><div class="dow">${e.dow}</div><div class="dom">${e.dom}</div><div class="mon">${e.mon}</div></div>
+        <div class="event-divider"></div>
+        <div class="event-details">
+          <div class="event-title-row">
+            <span class="event-title">${esc(e.title)}</span>
+            ${e.live?'<span class="pill pill-live">Live!</span>':""}
+          </div>
+          <div class="event-meta">
+            <div class="event-meta-item"><span class="mi">schedule</span>${esc(e.time)}</div>
+            <div class="event-meta-item"><span class="mi">pin_drop</span>${esc(e.loc)}</div>
+          </div>
+          <div class="event-desc">${esc(e.desc)}</div>
+        </div>
+      </div>
+      <button class="link-btn"><span class="mi">how_to_reg</span>REGISTER</button>
+    </div>`).join("");
+}
+function renderArticles(){
+  document.getElementById("articles-list").innerHTML=ARTICLES.map(a=>`
+    <div class="article-card">
+      <div class="article-img" style="background-image:url('${a.img}')"></div>
+      <div class="article-body">
+        <div class="article-tag-row"><span class="pill">NETWORKING</span></div>
+        <div>
+          <div class="article-title">${esc(a.title)}</div>
+          <div class="article-subtitle">${esc(a.sub)}</div>
+        </div>
+      </div>
+    </div>`).join("");
+}
+function renderIndustries(){
+  document.getElementById("industries-tags").innerHTML=IND_CORE.map(i=>`<button class="ds-chip${selInd.has(i)?" active":""}" data-ind="${esc(i)}">${esc(i)}</button>`).join("");
+  document.querySelectorAll("#industries-tags .ds-chip").forEach(b=>{
+    b.addEventListener("click",()=>{selInd.has(b.dataset.ind)?selInd.delete(b.dataset.ind):selInd.add(b.dataset.ind);renderIndustries();});
+  });
+}
+function toggleMoreIndustries(){}
+
+function onLocInput(val){
+  const list=document.getElementById("loc-list"),clr=document.getElementById("loc-clear");
+  if(clr)clr.style.display=val?"flex":"none";
+  if(!val.trim()){list.classList.remove("open");locFocused=-1;return;}
+  const m=LOCS.filter(l=>l.toLowerCase().includes(val.toLowerCase())).slice(0,8);
+  if(!m.length){list.classList.remove("open");return;}
+  locFocused=-1;
+  list.innerHTML=m.map(l=>`<div class="ta-item" data-v="${esc(l)}" onmousedown="selectLoc('${esc(l)}')"><span class="mi">place</span>${esc(l)}</div>`).join("");
+  list.classList.add("open");
+}
+function selectLoc(val){
+  document.getElementById("f-loc").value=val;
+  document.getElementById("loc-list").classList.remove("open");
+  const clr=document.getElementById("loc-clear");if(clr)clr.style.display="flex";
+  locFocused=-1;
+}
+function clearLoc(){
+  document.getElementById("f-loc").value="";
+  document.getElementById("loc-list").classList.remove("open");
+  const clr=document.getElementById("loc-clear");if(clr)clr.style.display="none";
+  document.getElementById("f-loc").focus();
+}
+function onLocKey(e){
+  const list=document.getElementById("loc-list"),items=list.querySelectorAll(".ta-item");
+  if(!items.length)return;
+  if(e.key==="ArrowDown"){e.preventDefault();locFocused=Math.min(locFocused+1,items.length-1);items.forEach((it,i)=>it.classList.toggle("focused",i===locFocused));}
+  else if(e.key==="ArrowUp"){e.preventDefault();locFocused=Math.max(locFocused-1,0);items.forEach((it,i)=>it.classList.toggle("focused",i===locFocused));}
+  else if(e.key==="Enter"&&locFocused>=0){e.preventDefault();selectLoc(items[locFocused].dataset.v);}
+  else if(e.key==="Escape"){list.classList.remove("open");locFocused=-1;}
+}
+document.addEventListener("click",e=>{const l=document.getElementById("loc-list");if(l&&!e.target.closest("[style*='position:relative']"))l.classList.remove("open");});
+const LOCS=["London, UK","Manchester, UK","Birmingham, UK","Leeds, UK","Bristol, UK","Edinburgh, UK","Glasgow, UK","Dublin, IE","Amsterdam, NL","Paris, FR","Berlin, DE","Munich, DE","Stockholm, SE","Oslo, NO","Zurich, CH","Brussels, BE","Madrid, ES","Barcelona, ES","Milan, IT","Vienna, AT","New York, US","San Francisco, US","Chicago, US","Boston, US","Seattle, US","Toronto, CA","Sydney, AU","Singapore","Dubai, UAE","Remote"];
+let locFocused=-1;
+function onLocInput(val){
+  const list=document.getElementById("loc-list"),clr=document.getElementById("loc-clear");
+  if(clr)clr.style.display=val?"flex":"none";
+  if(!val.trim()){list.classList.remove("open");locFocused=-1;return;}
+  const m=LOCS.filter(l=>l.toLowerCase().includes(val.toLowerCase())).slice(0,8);
+  if(!m.length){list.classList.remove("open");return;}
+  locFocused=-1;
+  list.innerHTML=m.map(l=>`<div class="ta-item" data-v="${esc(l)}" onmousedown="selectLoc('${esc(l)}')"><span class="mi">place</span>${esc(l)}</div>`).join("");
+  list.classList.add("open");
+}
+function selectLoc(val){
+  const inp=document.getElementById("f-loc");inp.value=val;
+  document.getElementById("loc-list").classList.remove("open");
+  const clr=document.getElementById("loc-clear");if(clr)clr.style.display="flex";
+  locFocused=-1;
+}
+function clearLoc(){
+  document.getElementById("f-loc").value="";
+  document.getElementById("loc-list").classList.remove("open");
+  const clr=document.getElementById("loc-clear");if(clr)clr.style.display="none";
+  document.getElementById("f-loc").focus();
+}
+function onLocKey(e){
+  const list=document.getElementById("loc-list"),items=list.querySelectorAll(".ta-item");
+  if(!items.length)return;
+  if(e.key==="ArrowDown"){e.preventDefault();locFocused=Math.min(locFocused+1,items.length-1);items.forEach((it,i)=>it.classList.toggle("focused",i===locFocused));}
+  else if(e.key==="ArrowUp"){e.preventDefault();locFocused=Math.max(locFocused-1,0);items.forEach((it,i)=>it.classList.toggle("focused",i===locFocused));}
+  else if(e.key==="Enter"&&locFocused>=0){e.preventDefault();selectLoc(items[locFocused].dataset.v);}
+  else if(e.key==="Escape"){list.classList.remove("open");locFocused=-1;}
+}
+document.addEventListener("click",e=>{const l=document.getElementById("loc-list");if(l&&!e.target.closest("#loc-field"))l.classList.remove("open");});
+// TWO-STEP INTERESTS
+const INT_DOMAINS=[
+  {id:"growth",label:"Growth & Demand",icon:"trending_up",topics:["Product-led growth","Demand generation","Revenue operations","Paid acquisition","SEO & organic","Lifecycle marketing"]},
+  {id:"brand",label:"Brand & Content",icon:"palette",topics:["Brand strategy","Content marketing","Community-led","Sustainability","Employer branding","Creative direction"]},
+  {id:"product",label:"Product & Digital",icon:"devices",topics:["Product marketing","E-commerce","Data & analytics","Partnerships","UX & design","AI & automation"]},
+  {id:"people",label:"People & Scale",icon:"groups",topics:["Team building","Cross-functional leadership","Market expansion","Culture & values","Executive presence","Change management"]},
+  {id:"sector",label:"Sector Focus",icon:"business",topics:["Fintech","FMCG","B2B SaaS","Consumer tech","Luxury & retail","Healthcare"]}
+];
+let activeDomain=null;
+
+function renderDomains(){
+  document.getElementById("int-domains").innerHTML=INT_DOMAINS.map(d=>
+    `<button class="int-domain${activeDomain===d.id?" active":""}" onclick="selectDomain('${d.id}')"><span class="mi">${d.icon}</span>${d.label}</button>`
+  ).join("");
+}
+
+function selectDomain(id){
+  activeDomain=activeDomain===id?null:id;
+  renderDomains();
+  const topicsEl=document.getElementById("int-topics");
+  if(!activeDomain){topicsEl.style.display="none";return;}
+  const dom=INT_DOMAINS.find(d=>d.id===id);
+  topicsEl.style.display="flex";
+  topicsEl.innerHTML=`<div class="topics-heading">${dom.label}</div><div class="topics-grid topics-anim">${dom.topics.map(t=>{
+    const sel=selInterests.has(t),dis=selInterests.size>=6&&!sel;
+    return `<button class="int-topic${sel?" selected":""}${dis?" disabled":""}" onclick="toggleTopic('${esc(t)}')">${esc(t)}</button>`;
+  }).join("")}</div>`;
+  renderSelChips();
+}
+
+function toggleTopic(t){
+  if(selInterests.has(t))selInterests.delete(t);
+  else if(selInterests.size<6)selInterests.add(t);
+  if(activeDomain)selectDomain(activeDomain);
+  else renderSelChips();
+}
+
+
+
+function renderSelChips(){
+  const row=document.getElementById("int-selected-row");
+  const chips=document.getElementById("int-sel-chips");
+  document.getElementById("int-count").textContent=selInterests.size;
+  if(selInterests.size===0){row.style.display="none";return;}
+  row.style.display="block";
+  chips.innerHTML=[...selInterests].map(t=>
+    `<span class="sel-chip">${esc(t)}<button onclick="toggleTopic('${esc(t)}')">×</button></span>`
+  ).join("");
+}
+function renderChips(){renderSelChips();}
+function setupChipInput(){}
+function startLoading(){
+  if(loadTimer)clearInterval(loadTimer);
+  let idx=0;document.getElementById("loading-msg").textContent=LOAD_MSGS[0];
+  loadTimer=setInterval(()=>{idx=(idx+1)%LOAD_MSGS.length;document.getElementById("loading-msg").textContent=LOAD_MSGS[idx];},1400);
+  setTimeout(()=>{clearInterval(loadTimer);setView(4);},3200);
+}
+function renderResults(){
+  const list=activeFilter==="all"?CONTACTS:CONTACTS.filter(c=>c.type===activeFilter);
+  document.getElementById("count").textContent=`${list.length} match${list.length!==1?"es":""}`;
+  document.getElementById("results-grid").innerHTML=list.map(c=>`
+    <div class="card-match">
+      <div class="card-top">
+        <div class="avatar-lg"><img src="${AVATARS[c.id]}" alt="${esc(c.name)}"></div>
+        <div class="person">
+          <div class="person-name">${esc(c.name)}</div>
+          <div class="person-title">${esc(c.title)} · ${esc(c.company)}</div>
+          <div class="person-loc"><span class="mi">place</span>${esc(c.location)}</div>
+        </div>
+      </div>
+      <span class="pill ${c.type==="hiring"?"pill-alert":"pill-success"}">${c.type==="hiring"?"Hiring manager":"Recruiter"}</span>
+      <div class="why-hero">${esc(c.whyConnect)}</div>
+      <div class="anchor-chips">${c.tags.map(t=>`<span class="info-tag">${esc(t)}</span>`).join("")}</div>
+      <div class="card-action"><button class="btn btn-primary btn-sm" onclick="openDrawer(${c.id})">Prepare to connect</button></div>
+    </div>`).join("");
+}
+function setupFilters(){
+  document.querySelectorAll("#filters .ds-chip").forEach(b=>{
+    b.addEventListener("click",()=>{
+      activeFilter=b.dataset.filter;
+      document.querySelectorAll("#filters .ds-chip").forEach(x=>x.classList.toggle("active",x===b));
+      renderResults();
+    });
+  });
+}
+function openDrawer(id){
+  const c=CONTACTS.find(x=>x.id===id);if(!c)return;
+  curId=id;
+  const av=document.getElementById("dr-av");
+  av.innerHTML=`<img src="${AVATARS[id]}" alt="${esc(c.name)}">`;
+  document.getElementById("dr-name").textContent=c.name;
+  document.getElementById("dr-title").textContent=`${c.title} · ${c.company}`;
+  document.getElementById("dr-goal").innerHTML=`Your goal is ${c.goal}`;
+  document.getElementById("dr-anchors").innerHTML=c.anchors.map(a=>`<div class="anchor-item"><span class="anchor-dot">●</span><span>${esc(a)}</span></div>`).join("");
+  document.getElementById("dr-draft").value=c.draft;
+  updateCharCount();
+  document.getElementById("mark-contacted").checked=contacted.has(id);
+  updateContactedLabel();
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("overlay").classList.add("open");
+}
+function closeDrawer(){
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("overlay").classList.remove("open");
+  curId=null;
+}
+function updateCharCount(){document.getElementById("char-count").textContent=document.getElementById("dr-draft").value.length+" characters";}
+function regenerateDraft(){
+  const btn=document.getElementById("regen-btn");
+  btn.disabled=true;btn.innerHTML='<span class="mi" style="animation:spin 1s linear infinite">refresh</span>Regenerating...';
+  setTimeout(()=>{
+    const c=CONTACTS.find(x=>x.id===curId);
+    if(c){
+      const fn=c.name.split(" ")[0];
+      document.getElementById("dr-draft").value=`Hi ${fn},\n\n${c.anchors[0].replace(/\.$/,"")} — that's why I'm writing.\n\nI'm exploring what's next in my marketing career and your work at ${c.company} stands out. Would you be open to a 15-minute call? Genuinely just want to learn from how you're thinking about the space.\n\nWhatever works for you.\n\nBest,\nPatrick`;
+      updateCharCount();
+    }
+    btn.disabled=false;btn.innerHTML='<span class="mi">refresh</span>Regenerate';
+    showToast("New draft generated");
+  },900);
+}
+function copyMessage(){
+  const text=document.getElementById("dr-draft").value;
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text);
+  if(document.getElementById("mark-contacted").checked&&curId)contacted.add(curId);
+  showToast("Message copied to clipboard");
+}
+function toggleContacted(){
+  if(!curId)return;
+  document.getElementById("mark-contacted").checked?contacted.add(curId):contacted.delete(curId);
+  updateContactedLabel();
+}
+function updateContactedLabel(){
+  document.getElementById("contacted-label").textContent=document.getElementById("mark-contacted").checked?"Will mark as contacted when you copy":"Mark as contacted when I send this";
+}
+function showToast(msg){
+  const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2500);
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
+// ============================================================
+// COMMUNITY FINDER (views 5, 6, 7) — hardcoded dataset
+// ============================================================
+const COMMUNITIES=[
+  // ---- LONDON / PRODUCT ----
+  {name:"Mind the Product",initials:"MP",headerColor:"#5B2D8A",tagline:"The biggest gathering of product people in the city, with regular in-person meetups.",platform:"Slack",platformClass:"pf-slack",members:"60k+ globally",activity:"Very active",roles:["product"],industries:["technology","saas","b2b"],location:"London, UK",url:"https://www.mindtheproduct.com",why:"Dedicated channels by industry including fintech and healthtech. The broadest active PM network you can join in a single step."},
+  {name:"ProductTank London",initials:"PT",headerColor:"#0D7CC9",tagline:"Monthly evening talks with product leaders, hosted in Shoreditch and Soho.",platform:"Meetup",platformClass:"pf-meetup",members:"12k members",activity:"Monthly",roles:["product"],industries:["technology","saas"],location:"London, UK",url:"https://www.meetup.com/producttank-london",why:"The easiest way to meet London PMs in person. Local chapter of Mind the Product, without the Slack noise."},
+  {name:"Lenny's Slack",initials:"LS",headerColor:"#D946AB",tagline:"Invite-only Slack from one of the most-read product writers, with weekly AMAs.",platform:"Slack",platformClass:"pf-slack",members:"40k+ members",activity:"Very active",roles:["product","growth"],industries:["technology","saas","b2b","fintech"],location:"London, UK",url:"https://www.lennysnewsletter.com",why:"Senior PMs from Stripe, Notion and Linear participate openly here. That level of access is rare in any other community."},
+  {name:"Reforge Community",initials:"RF",headerColor:"#FF5858",tagline:"Senior PM and growth practitioner network built around shared programs and frameworks.",platform:"Circle",platformClass:"pf-circle",members:"15k members",activity:"Active",roles:["product","growth"],industries:["technology","saas","b2b"],location:"London, UK",url:"https://www.reforge.com",why:"Higher signal than open Slacks because every member has been through the same programs. Best suited for senior PMs."},
+
+  // ---- LONDON / FINTECH ----
+  {name:"Fintech Founders",initials:"FF",headerColor:"#0F6E56",tagline:"Operator-led Slack for people building or scaling financial products in the UK.",platform:"Slack",platformClass:"pf-slack",members:"3.5k members",activity:"Very active",roles:["product","growth","engineering"],industries:["fintech"],location:"London, UK",url:"https://fintechfounders.com",why:"Heavy participation from Monzo, Wise, Revolut and Starling. The right room if your next role is specifically in UK fintech."},
+  {name:"Innovate Finance",initials:"IF",headerColor:"#185FA5",tagline:"The UK's industry body for fintech, with member events and policy briefings.",platform:"Forum",platformClass:"pf-forum",members:"250+ orgs",activity:"Active",roles:["product","strategy","operations"],industries:["fintech"],location:"London, UK",url:"https://www.innovatefinance.com",why:"More institutional than peer Slacks. Useful for understanding the regulation and macro trends shaping fintech roles right now."},
+  {name:"Women in Fintech",initials:"WF",headerColor:"#D14528",tagline:"Supportive space for women and non-binary professionals across financial services.",platform:"Slack",platformClass:"pf-slack",members:"4k+ members",activity:"Active",roles:["product","engineering","growth","operations"],industries:["fintech"],location:"London, UK",url:"https://womeninfintech.org",why:"Mentorship circles, job-referral channels, and the most consistent in-person meetup cadence of any fintech community in London."},
+
+  // ---- LONDON / DESIGN ----
+  {name:"Friends of Figma London",initials:"FF",headerColor:"#A259FF",tagline:"Local chapter of the global Figma community, hosting hands-on design events.",platform:"Meetup",platformClass:"pf-meetup",members:"8k members",activity:"Monthly",roles:["design","product"],industries:["technology","saas","b2b"],location:"London, UK",url:"https://friends.figma.com/london",why:"Run by working designers, not Figma staff. Sessions are practical and the post-event conversations are where the real connections happen."},
+  {name:"UX London",initials:"UX",headerColor:"#1D9E75",tagline:"Conference-led community for senior product and experience designers.",platform:"Newsletter",platformClass:"pf-newsletter",members:"20k subscribers",activity:"Active",roles:["design","product"],industries:["technology","saas","b2b","consulting"],location:"London, UK",url:"https://uxlondon.com",why:"Annual conference plus year-round content. The strongest signal for senior design roles in the London market."},
+
+  // ---- MUNICH ----
+  {name:"Product Tank Munich",initials:"PM",headerColor:"#534AB7",tagline:"Monthly evening sessions for product managers across Bavaria's startup scene.",platform:"Meetup",platformClass:"pf-meetup",members:"3k members",activity:"Monthly",roles:["product"],industries:["technology","saas","b2b","fintech"],location:"Munich, DE",url:"https://www.meetup.com/producttank-munich",why:"The default room for PMs in Munich. Smaller than London but tighter, so connections tend to stick faster."},
+  {name:"Bits & Pretzels Network",initials:"BP",headerColor:"#BA7517",tagline:"Founder and operator community anchored around Munich's flagship startup conference.",platform:"Forum",platformClass:"pf-forum",members:"10k+ members",activity:"Active",roles:["product","strategy","operations"],industries:["technology","saas","fintech"],location:"Munich, DE",url:"https://www.bitsandpretzels.com",why:"The broadest cross-functional network in Munich tech. Useful if you're weighing roles across product, ops and BD."},
+  {name:"UnternehmerTUM",initials:"UT",headerColor:"#993556",tagline:"Munich's deep-tech and startup hub, with regular community events and meetups.",platform:"Other",platformClass:"pf-other",members:"5k+ active",activity:"Very active",roles:["product","engineering","strategy"],industries:["technology","saas","b2b"],location:"Munich, DE",url:"https://www.unternehmertum.de",why:"Connected to both early-stage founders and corporate innovation teams. Rare overlap for anyone thinking about either path."},
+  {name:"German Tech Entrepreneurs",initials:"GT",headerColor:"#27500A",tagline:"WhatsApp-led group for operators and founders building out of Germany.",platform:"WhatsApp",platformClass:"pf-whatsapp",members:"1.2k members",activity:"Active",roles:["product","growth","strategy"],industries:["technology","saas","fintech"],location:"Munich, DE",url:"https://www.linkedin.com/groups/german-tech",why:"Lower friction than Slack and lives on your phone. Surprisingly active for deal flow and warm intro requests."},
+
+  // ---- MULTI-LOCATION / GLOBAL FALLBACKS ----
+  {name:"Product Coalition",initials:"PC",headerColor:"#185FA5",tagline:"Open product community combining Slack discussions with a Medium publication.",platform:"Slack",platformClass:"pf-slack",members:"35k members",activity:"Very active",roles:["product"],industries:["technology","saas","b2b","fintech","healthcare"],location:"Remote",url:"https://productcoalition.com",why:"Global membership but active in European hours. A good complement to a local meetup community rather than a replacement."},
+  {name:"Demand Curve",initials:"DC",headerColor:"#3B6D11",tagline:"Growth marketing and acquisition community with frameworks and peer reviews.",platform:"Slack",platformClass:"pf-slack",members:"12k members",activity:"Active",roles:["growth","product"],industries:["saas","b2b","fintech"],location:"Remote",url:"https://www.demandcurve.com",why:"Higher quality than most open growth Slacks. Used by demand gen leads who actually run paid programs."}
+];
+
+const COM_INDUSTRIES=[
+  {id:"technology",label:"Technology"},
+  {id:"saas",label:"SaaS / B2B"},
+  {id:"fintech",label:"Fintech"},
+  {id:"healthcare",label:"Healthcare"},
+  {id:"consulting",label:"Consulting"},
+  {id:"b2b",label:"Enterprise"}
+];
+
+const COM_LOAD_MSGS=[
+  "Scanning communities in your area...",
+  "Filtering for active groups...",
+  "Pulling the latest member counts...",
+  "Ranking by fit to your role..."
+];
+
+let selComInd=new Set(["technology","saas"]);
+let comLoadTimer=null;
+let comActiveFilter="all";
+let comSaved=new Set();
+let comResults=[];
+
+function renderComIndustries(){
+  const wrap=document.getElementById("com-industries-tags");
+  if(!wrap)return;
+  wrap.innerHTML=COM_INDUSTRIES.map(i=>`<button class="ds-chip${selComInd.has(i.id)?" active":""}" data-ind="${esc(i.id)}">${esc(i.label)}</button>`).join("");
+  wrap.querySelectorAll(".ds-chip").forEach(b=>{
+    b.addEventListener("click",()=>{
+      const id=b.dataset.ind;
+      if(selComInd.has(id)){selComInd.delete(id);}
+      else if(selComInd.size<2){selComInd.add(id);}
+      else{showToast("You can pick up to 2 industries");return;}
+      renderComIndustries();renderQSummary();
+    });
+  });
+}
+
+function renderQSummary(){
+  const t=document.getElementById("cf-title")?.value?.trim()||"professionals";
+  const loc=document.getElementById("cf-loc")?.value?.trim()||"your area";
+  const inds=[...selComInd].map(id=>COM_INDUSTRIES.find(i=>i.id===id)?.label).filter(Boolean);
+  let indPhrase="";
+  if(inds.length===1)indPhrase=` in <strong>${esc(inds[0])}</strong>`;
+  else if(inds.length===2)indPhrase=` in <strong>${esc(inds[0])}</strong> and <strong>${esc(inds[1])}</strong>`;
+  const el=document.getElementById("q-summary-text");
+  if(el)el.innerHTML=`We'll find communities for <strong>${esc(t)}</strong>${indPhrase}, based in <strong>${esc(loc)}</strong>.`;
+}
+
+// Community location typeahead (re-uses LOCS)
+let cLocFocused=-1;
+function onCLocInput(val){
+  const list=document.getElementById("cloc-list"),clr=document.getElementById("cloc-clear");
+  if(clr)clr.style.display=val?"flex":"none";
+  renderQSummary();
+  if(!val.trim()){list.classList.remove("open");cLocFocused=-1;return;}
+  const m=LOCS.filter(l=>l.toLowerCase().includes(val.toLowerCase())).slice(0,8);
+  if(!m.length){list.classList.remove("open");return;}
+  cLocFocused=-1;
+  list.innerHTML=m.map(l=>`<div class="ta-item" data-v="${esc(l)}" onmousedown="selectCLoc('${esc(l)}')"><span class="mi">place</span>${esc(l)}</div>`).join("");
+  list.classList.add("open");
+}
+function selectCLoc(val){
+  document.getElementById("cf-loc").value=val;
+  document.getElementById("cloc-list").classList.remove("open");
+  const clr=document.getElementById("cloc-clear");if(clr)clr.style.display="flex";
+  cLocFocused=-1;renderQSummary();
+}
+function clearCLoc(){
+  document.getElementById("cf-loc").value="";
+  document.getElementById("cloc-list").classList.remove("open");
+  const clr=document.getElementById("cloc-clear");if(clr)clr.style.display="none";
+  document.getElementById("cf-loc").focus();renderQSummary();
+}
+function onCLocKey(e){
+  const list=document.getElementById("cloc-list"),items=list.querySelectorAll(".ta-item");
+  if(!items.length)return;
+  if(e.key==="ArrowDown"){e.preventDefault();cLocFocused=Math.min(cLocFocused+1,items.length-1);items.forEach((it,i)=>it.classList.toggle("focused",i===cLocFocused));}
+  else if(e.key==="ArrowUp"){e.preventDefault();cLocFocused=Math.max(cLocFocused-1,0);items.forEach((it,i)=>it.classList.toggle("focused",i===cLocFocused));}
+  else if(e.key==="Enter"&&cLocFocused>=0){e.preventDefault();selectCLoc(items[cLocFocused].dataset.v);}
+  else if(e.key==="Escape"){list.classList.remove("open");cLocFocused=-1;}
+}
+document.addEventListener("click",e=>{const l=document.getElementById("cloc-list");if(l&&!e.target.closest("#cloc-field"))l.classList.remove("open");});
+
+function matchCommunities(){
+  const role=(document.getElementById("cf-title")?.value||"").toLowerCase();
+  const loc=(document.getElementById("cf-loc")?.value||"").toLowerCase();
+  // Score each community: location match (+3), industry overlap (+2 each), role match (+1)
+  // Bias toward returning 5-6 results
+  const scored=COMMUNITIES.map(c=>{
+    let s=0;
+    if(loc&&c.location.toLowerCase().includes(loc.split(",")[0].trim()))s+=3;
+    else if(c.location==="Remote")s+=1;
+    selComInd.forEach(ind=>{if(c.industries.includes(ind))s+=2;});
+    // crude role match
+    if(role){
+      const roleKey=role.includes("product")?"product":role.includes("growth")?"growth":role.includes("design")?"design":role.includes("engineer")?"engineering":role.includes("strateg")?"strategy":role.includes("operat")?"operations":"";
+      if(roleKey&&c.roles.includes(roleKey))s+=1;
+    }
+    return {c,s};
+  }).filter(x=>x.s>0).sort((a,b)=>b.s-a.s);
+  // Take top 6
+  return scored.slice(0,6).map(x=>x.c);
+}
+
+function startComLoading(){
+  // Capture results based on current form state
+  comResults=matchCommunities();
+  setView(6);
+  let i=0;
+  const msgEl=document.getElementById("com-loading-msg");
+  if(msgEl)msgEl.textContent=COM_LOAD_MSGS[0];
+  if(comLoadTimer)clearInterval(comLoadTimer);
+  comLoadTimer=setInterval(()=>{
+    i++;
+    if(i>=COM_LOAD_MSGS.length){clearInterval(comLoadTimer);setView(7);return;}
+    if(msgEl)msgEl.textContent=COM_LOAD_MSGS[i];
+  },1400);
+}
+
+function renderComFilters(){
+  const platforms=["all",...new Set(comResults.map(c=>c.platform))];
+  const wrap=document.getElementById("com-filters");
+  if(!wrap)return;
+  wrap.innerHTML=platforms.map(p=>`<button class="ds-chip ds-chip-sm${p===comActiveFilter?" active":""}" data-filter="${esc(p)}">${p==="all"?"All":esc(p)}</button>`).join("");
+  wrap.querySelectorAll(".ds-chip").forEach(b=>{
+    b.addEventListener("click",()=>{comActiveFilter=b.dataset.filter;renderComFilters();renderComGrid();});
+  });
+}
+
+function renderComGrid(){
+  const filtered=comActiveFilter==="all"?comResults:comResults.filter(c=>c.platform===comActiveFilter);
+  document.getElementById("com-count").textContent=`${filtered.length} ${filtered.length===1?"community":"communities"}`;
+  const nudgeSlot=document.getElementById("com-low-nudge-slot");
+  if(comResults.length<5){
+    nudgeSlot.innerHTML=`<div class="com-low-nudge"><span class="mi">tips_and_updates</span><div>Only ${comResults.length} match${comResults.length===1?"":"es"} for that combination. Try broadening your industry or location. <a onclick="setView(5)" style="color:var(--brand-2);text-decoration:underline;cursor:pointer;font-weight:500">Edit search</a></div></div>`;
+  }else{nudgeSlot.innerHTML="";}
+  const grid=document.getElementById("com-grid");
+  if(!filtered.length){
+    grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--text-2)">No communities on this platform. <a onclick="comActiveFilter='all';renderComFilters();renderComGrid()" style="color:var(--brand-2);cursor:pointer;text-decoration:underline">Show all</a></div>`;
+    return;
+  }
+  grid.innerHTML=filtered.map(c=>`
+    <div class="com-card">
+      <div class="com-card-header">
+        <div class="com-card-mono" style="color:${c.headerColor}">${esc(c.initials)}</div>
+        <div class="com-card-name">${esc(c.name)}</div>
+      </div>
+      <div class="com-card-body">
+        <div class="com-card-content">
+          <p class="com-card-tagline">${esc(c.tagline)}</p>
+          <div class="com-card-why">${esc(c.why)}</div>
+        </div>
+        <div class="com-card-divider"></div>
+        <div class="com-card-foot">
+          <div class="com-card-meta">
+            <span class="com-card-platform ${c.platformClass}">${esc(c.platform)}</span>
+            <span class="com-card-members">${esc(c.members)}</span>
+          </div>
+          <a class="com-card-visit" href="${esc(c.url)}" target="_blank" rel="noopener">
+            VISIT
+            <img src="https://www.figma.com/api/mcp/asset/c97fc1c9-7186-4ed9-965d-3b23c7b7188f" alt="">
+          </a>
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+function toggleComSave(name,btn){
+  if(comSaved.has(name)){
+    comSaved.delete(name);
+    btn.classList.remove("saved");
+    btn.querySelector(".mi").textContent="bookmark_border";
+    btn.title="Save for later";
+    showToast("Removed from saved");
+  }else{
+    comSaved.add(name);
+    btn.classList.add("saved");
+    btn.querySelector(".mi").textContent="bookmark";
+    btn.title="Saved";
+    showToast("Saved for later");
+  }
+}
+
+// Hook live summary updates on text inputs
+document.addEventListener("input",e=>{
+  if(e.target&&(e.target.id==="cf-title"||e.target.id==="cf-loc"))renderQSummary();
+});
+
+// Extend setView to handle new views (replaces the original above)
+setView=function(n){
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",+v.dataset.v===n));
+  document.querySelectorAll(".devnav button").forEach(b=>b.classList.toggle("active",+b.dataset.vn===n));
+  window.scrollTo(0,0);
+  if(n!==6&&comLoadTimer){clearInterval(comLoadTimer);comLoadTimer=null;}
+  if(n===3)startLoading();
+  if(n===4)renderResults();
+  if(n===5){renderComIndustries();renderQSummary();}
+  if(n===6){
+    // Dev-nav direct jump: kick off loading visual, but don't auto-advance (let it cycle for demo)
+    let i=0;
+    const msgEl=document.getElementById("com-loading-msg");
+    if(msgEl)msgEl.textContent=COM_LOAD_MSGS[0];
+    if(comLoadTimer)clearInterval(comLoadTimer);
+    comLoadTimer=setInterval(()=>{i=(i+1)%COM_LOAD_MSGS.length;if(msgEl)msgEl.textContent=COM_LOAD_MSGS[i];},1400);
+  }
+  if(n===7){
+    if(!comResults.length)comResults=matchCommunities();
+    renderComFilters();renderComGrid();
+  }
+};
+
+renderEvents();renderArticles();renderIndustries();renderDomains();renderChips();setupChipInput();setupFilters();
+</script>
+</body>
+</html>
