@@ -213,6 +213,58 @@ img{display:block;max-width:100%}
 .com-low-nudge{background:#FFF7E6;border:1px solid #FFD980;border-radius:8px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--text-1)}
 .com-low-nudge .mi{color:#A06200;flex-shrink:0}
 
+/* ===== CONSOLIDATED COMMUNITY VIEW (filter bar + inline results) ===== */
+.com-page{background:var(--bg-1);min-height:calc(100vh - 109px);padding:24px 0 48px}
+.com-page-inner{max-width:1135px;margin:0 auto;width:100%;padding:0 32px 0 56px;box-sizing:border-box}
+.com-page-head{margin-bottom:20px}
+.com-page-head h1{font-size:28px;font-weight:600;color:var(--text-1);letter-spacing:-.84px;line-height:36px;margin-bottom:6px}
+.com-page-head p{font-size:14px;color:var(--text-2);max-width:720px;line-height:22px}
+
+/* Filter bar */
+.com-filterbar{background:var(--bg-white);border:1px solid var(--border-1);border-radius:12px;padding:16px;margin-bottom:8px}
+.com-filter-row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+.com-field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:150px;position:relative}
+.com-field-ind{flex:1.6;min-width:210px}
+.com-field-label{font-size:11px;font-weight:500;color:var(--text-2);text-transform:uppercase;letter-spacing:.8px;line-height:16px}
+.com-field .inp-wrap{height:44px}
+.com-field .inp-wrap input{padding:10px 14px}
+.com-field-action{flex:0 0 auto;min-width:auto}
+
+/* Multiselect dropdown */
+.ms-control{display:flex;align-items:center;justify-content:space-between;gap:8px;height:44px;background:var(--bg-white);border:1px solid var(--border-input);border-radius:8px;padding:0 12px 0 14px;cursor:pointer;transition:border-color .15s;user-select:none}
+.ms-control:hover{border-color:var(--brand-2)}
+.ms-control.open{border-color:var(--brand-2)}
+.ms-control-text{font-size:14px;color:var(--text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.ms-control-text.placeholder{color:#5C6573}
+.ms-control .mi{font-size:20px;color:var(--text-2);flex-shrink:0;transition:transform .15s}
+.ms-control.open .mi{transform:rotate(180deg)}
+.ms-count{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;background:var(--brand-2);color:#fff;border-radius:9px;font-size:11px;font-weight:600;flex-shrink:0}
+.ms-menu{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg-white);border:1px solid var(--border-1);border-radius:8px;box-shadow:0 4px 16px rgba(28,48,75,.12);z-index:55;padding:6px;display:none;max-height:280px;overflow-y:auto}
+.ms-menu.open{display:block}
+.ms-opt{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:6px;cursor:pointer;font-size:14px;color:var(--text-1)}
+.ms-opt:hover{background:var(--bg-1)}
+.ms-opt.disabled{opacity:.4;cursor:default}
+.ms-opt.disabled:hover{background:none}
+.ms-check{width:18px;height:18px;border:1.5px solid var(--text-3);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s,border-color .15s}
+.ms-opt.checked .ms-check{background:var(--brand-2);border-color:var(--brand-2)}
+.ms-check .mi{font-size:14px;color:#fff;display:none}
+.ms-opt.checked .ms-check .mi{display:block}
+.ms-hint{font-size:11px;color:var(--text-3);padding:6px 10px 2px}
+
+/* Subtle summary under the button */
+.com-summary-line{font-size:12px;color:var(--text-3);line-height:18px;margin:0 0 24px;padding-left:2px}
+.com-summary-line strong{color:var(--text-2);font-weight:500}
+
+/* Results region inside the page */
+.com-results-region{min-height:200px}
+.com-results-bar{display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.com-results-bar .filter-label{font-size:12px;color:var(--text-2);text-transform:uppercase;letter-spacing:.6px;font-weight:500}
+.com-results-count{margin-left:auto;font-size:13px;color:var(--text-2)}
+.com-empty-first{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:56px 24px;color:var(--text-2)}
+.com-empty-first .mi{font-size:40px;color:var(--text-3);margin-bottom:12px}
+.com-empty-first .ttl{font-size:16px;font-weight:600;color:var(--text-1);margin-bottom:4px}
+.com-inline-skel{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+
 /* QUESTION VIEW */
 .q-wrap{background:var(--bg-1);min-height:calc(100vh - 109px);padding:24px 56px 48px;display:flex;flex-direction:column;gap:24px}
 .q-card{background:var(--bg-white);border-radius:8px;max-width:900px;margin:0 auto;width:100%;padding:40px;display:flex;flex-direction:column;gap:32px}
@@ -413,10 +465,10 @@ img{display:block;max-width:100%}
           <div class="com-promo">
             <div class="com-promo-left">
               <span class="com-promo-new">New!</span>
-              <h3>Join the rooms where your peers already are.</h3>
+              <h3>Join the communities where your peers already are.</h3>
               <p>Active communities matched to your role, industry and city.</p>
               <button class="com-promo-btn" onclick="setView(5)">
-                FIND MY COMMUNITIES
+                FIND COMMUNITIES
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
             </div>
@@ -572,158 +624,108 @@ img{display:block;max-width:100%}
       </div>
     </section>
 
-    <!-- VIEW 5: COMMUNITY QUESTION -->
+    <!-- VIEW 5: COMMUNITIES (filter bar + inline results on one page) -->
     <section class="view" data-v="5">
-      <div class="q-wrap">
-        <div class="hero-breadcrumb" style="padding:0 0 8px">
-          <span class="mi">stream</span><span>Networking</span>
-          <span style="color:var(--text-3);margin:0 4px">›</span>
-          <span style="color:var(--brand-2)">Find communities</span>
-        </div>
-        <div class="q-card">
-          <div class="q-head">
+      <div class="com-page">
+        <div class="com-page-inner">
+          <div class="hero-breadcrumb" style="padding:0 0 12px">
+            <span class="mi">stream</span><span>Networking</span>
+            <span style="color:var(--text-3);margin:0 4px">›</span>
+            <span style="color:var(--brand-2)">Communities</span>
+          </div>
+
+          <div class="com-page-head">
             <h1>Find your communities.</h1>
-            <p>Tell us where you are professionally — we'll surface 5–6 active groups worth joining.</p>
+            <p>Tell us where you are professionally — we'll surface active groups worth joining. Adjust anything below and search again to refine.</p>
           </div>
 
-          <!-- Job title -->
-          <div class="inp-field">
-            <label class="inp-label">Your role</label>
-            <div class="inp-wrap">
-              <input id="cf-title" value="Product Manager" placeholder="e.g. Product Manager">
-              <span class="inp-clear mi" style="display:none" onclick="this.previousElementSibling.value='';this.previousElementSibling.focus();renderQSummary()">close</span>
+          <!-- Filter bar -->
+          <div class="com-filterbar">
+            <div class="com-filter-row">
+              <!-- Role -->
+              <div class="com-field">
+                <label class="com-field-label">Role</label>
+                <div class="inp-wrap">
+                  <input id="cf-title" value="" placeholder="e.g. Product Manager" oninput="renderComSummary()">
+                </div>
+              </div>
+
+              <!-- Industry multiselect -->
+              <div class="com-field com-field-ind" id="cf-ind-field">
+                <label class="com-field-label">Industry</label>
+                <div class="ms-control" id="ms-control" onclick="toggleIndMenu(event)">
+                  <span class="ms-control-text" id="ms-control-text">Select industries</span>
+                  <span class="ms-count" id="ms-count" style="display:none">0</span>
+                  <span class="mi">expand_more</span>
+                </div>
+                <div class="ms-menu" id="ms-menu"></div>
+              </div>
+
+              <!-- Country -->
+              <div class="com-field">
+                <label class="com-field-label">Country</label>
+                <div class="inp-wrap">
+                  <input id="cf-country" value="" placeholder="Country" oninput="renderComSummary()">
+                </div>
+              </div>
+
+              <!-- City / State -->
+              <div class="com-field" id="cloc-field" style="position:relative">
+                <label class="com-field-label">City / state</label>
+                <div class="inp-wrap">
+                  <input id="cf-loc" value="" placeholder="City or state" autocomplete="off"
+                    oninput="onCLocInput(this.value)" onfocus="onCLocInput(this.value)" onkeydown="onCLocKey(event)">
+                </div>
+                <div class="ta-list" id="cloc-list"></div>
+              </div>
+
+              <!-- Action -->
+              <div class="com-field com-field-action">
+                <label class="com-field-label" style="visibility:hidden">Go</label>
+                <button class="btn btn-primary" style="height:44px" onclick="runComSearch()">FIND COMMUNITIES</button>
+              </div>
             </div>
           </div>
 
-          <!-- Industries -->
-          <div class="inp-field">
-            <label class="inp-label">Industry focus</label>
-            <p style="font-size:12px;color:var(--text-2);margin-top:-2px">Pick up to 2. More selections produce more generic results.</p>
-            <div class="tag-grid" id="com-industries-tags"></div>
+          <!-- Subtle summary under the button -->
+          <p class="com-summary-line" id="com-summary-line"></p>
+
+          <!-- Results region (skeleton first, grid after search) -->
+          <div class="com-results-region" id="com-results-region">
+            <!-- Initial empty state (before any search) -->
+            <div id="com-results-initial">
+              <div class="com-empty-first">
+                <span class="mi">groups</span>
+                <div class="ttl">Ready when you are</div>
+                <div>Set your role, industry and location above, then hit <strong>Find communities</strong> to see active groups worth joining.</div>
+              </div>
+            </div>
+
+            <!-- Loading state (during a search) -->
+            <div id="com-results-loading" style="display:none">
+              <div class="loading-pill" style="margin-bottom:24px;display:inline-flex">
+                <div class="pulse-dot"></div>
+                <span id="com-loading-msg">Scanning communities in your area...</span>
+              </div>
+              <div class="com-inline-skel">
+                <div class="skel" style="padding:0;height:auto;border-radius:12px;display:flex;flex-direction:column;overflow:hidden">
+                  <div style="padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EBEBEE"><div class="sk-l" style="width:44px;height:44px;border-radius:16px;margin:0;flex-shrink:0"></div><div class="sk-l" style="width:45%;height:16px;margin:0"></div></div>
+                  <div style="padding:24px;display:flex;flex-direction:column;gap:16px"><div style="display:flex;flex-direction:column;gap:8px"><div class="sk-l" style="width:100%;height:14px;margin:0"></div><div class="sk-l" style="width:80%;height:14px;margin:0"></div></div><div class="sk-l" style="width:100%;height:72px;margin:0;border-radius:8px"></div></div>
+                </div>
+                <div class="skel" style="padding:0;height:auto;border-radius:12px;display:flex;flex-direction:column;overflow:hidden">
+                  <div style="padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EBEBEE"><div class="sk-l" style="width:44px;height:44px;border-radius:16px;margin:0;flex-shrink:0"></div><div class="sk-l" style="width:50%;height:16px;margin:0"></div></div>
+                  <div style="padding:24px;display:flex;flex-direction:column;gap:16px"><div style="display:flex;flex-direction:column;gap:8px"><div class="sk-l" style="width:90%;height:14px;margin:0"></div><div class="sk-l" style="width:70%;height:14px;margin:0"></div></div><div class="sk-l" style="width:100%;height:72px;margin:0;border-radius:8px"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Loaded results -->
+            <div id="com-results-loaded" style="display:none">
+              <div id="com-low-nudge-slot"></div>
+              <div class="com-grid" id="com-grid"></div>
+            </div>
           </div>
 
-          <!-- Location -->
-          <div class="inp-field" id="cloc-field" style="position:relative">
-            <label class="inp-label">City or region</label>
-            <div class="inp-wrap">
-              <input id="cf-loc" value="London, UK" placeholder="City or region" autocomplete="off"
-                oninput="onCLocInput(this.value)" onfocus="onCLocInput(this.value)" onkeydown="onCLocKey(event)">
-              <span class="inp-clear mi" id="cloc-clear" style="display:flex" onclick="clearCLoc()">close</span>
-            </div>
-            <div class="ta-list" id="cloc-list"></div>
-          </div>
-
-          <!-- Restate-before-commit summary -->
-          <div class="q-summary" id="q-summary">
-            <span class="mi">search</span>
-            <span id="q-summary-text"></span>
-          </div>
-
-          <div class="q-actions">
-            <button class="btn btn-secondary" onclick="setView(1)">CANCEL</button>
-            <button class="btn btn-primary" onclick="startComLoading()">FIND MY COMMUNITIES</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- VIEW 6: COMMUNITY LOADING -->
-    <section class="view" data-v="6">
-      <div class="loading-wrap">
-        <div class="loading-pill">
-          <div class="pulse-dot"></div>
-          <span id="com-loading-msg">Scanning communities in your area...</span>
-        </div>
-        <div class="skel-grid" style="grid-template-columns:repeat(2,1fr);max-width:1135px">
-          <!-- Each skeleton mirrors: header (mono tile + name) / divider / tagline / why box / divider / footer -->
-          <div class="skel" style="padding:0;height:auto;border-radius:12px;display:flex;flex-direction:column;overflow:hidden">
-            <div style="padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EBEBEE">
-              <div class="sk-l" style="width:44px;height:44px;border-radius:16px;margin:0;flex-shrink:0"></div>
-              <div class="sk-l" style="width:45%;height:16px;margin:0"></div>
-            </div>
-            <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
-              <div style="display:flex;flex-direction:column;gap:8px">
-                <div class="sk-l" style="width:100%;height:14px;margin:0"></div>
-                <div class="sk-l" style="width:80%;height:14px;margin:0"></div>
-              </div>
-              <div class="sk-l" style="width:100%;height:72px;margin:0;border-radius:8px"></div>
-              <div style="height:1px;background:#EBEBEE;margin:4px 0"></div>
-              <div style="display:flex;align-items:center;justify-content:space-between">
-                <div class="sk-l" style="width:72px;height:24px;margin:0;border-radius:16px"></div>
-                <div class="sk-l" style="width:96px;height:36px;margin:0;border-radius:8px"></div>
-              </div>
-            </div>
-          </div>
-          <div class="skel" style="padding:0;height:auto;border-radius:12px;display:flex;flex-direction:column;overflow:hidden">
-            <div style="padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EBEBEE">
-              <div class="sk-l" style="width:44px;height:44px;border-radius:16px;margin:0;flex-shrink:0"></div>
-              <div class="sk-l" style="width:55%;height:16px;margin:0"></div>
-            </div>
-            <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
-              <div style="display:flex;flex-direction:column;gap:8px">
-                <div class="sk-l" style="width:100%;height:14px;margin:0"></div>
-                <div class="sk-l" style="width:70%;height:14px;margin:0"></div>
-              </div>
-              <div class="sk-l" style="width:100%;height:72px;margin:0;border-radius:8px"></div>
-              <div style="height:1px;background:#EBEBEE;margin:4px 0"></div>
-              <div style="display:flex;align-items:center;justify-content:space-between">
-                <div class="sk-l" style="width:80px;height:24px;margin:0;border-radius:16px"></div>
-                <div class="sk-l" style="width:96px;height:36px;margin:0;border-radius:8px"></div>
-              </div>
-            </div>
-          </div>
-          <div class="skel" style="padding:0;height:auto;border-radius:12px;display:flex;flex-direction:column;overflow:hidden">
-            <div style="padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EBEBEE">
-              <div class="sk-l" style="width:44px;height:44px;border-radius:16px;margin:0;flex-shrink:0"></div>
-              <div class="sk-l" style="width:40%;height:16px;margin:0"></div>
-            </div>
-            <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
-              <div style="display:flex;flex-direction:column;gap:8px">
-                <div class="sk-l" style="width:100%;height:14px;margin:0"></div>
-                <div class="sk-l" style="width:85%;height:14px;margin:0"></div>
-              </div>
-              <div class="sk-l" style="width:100%;height:72px;margin:0;border-radius:8px"></div>
-              <div style="height:1px;background:#EBEBEE;margin:4px 0"></div>
-              <div style="display:flex;align-items:center;justify-content:space-between">
-                <div class="sk-l" style="width:88px;height:24px;margin:0;border-radius:16px"></div>
-                <div class="sk-l" style="width:96px;height:36px;margin:0;border-radius:8px"></div>
-              </div>
-            </div>
-          </div>
-          <div class="skel" style="padding:0;height:auto;border-radius:12px;display:flex;flex-direction:column;overflow:hidden">
-            <div style="padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EBEBEE">
-              <div class="sk-l" style="width:44px;height:44px;border-radius:16px;margin:0;flex-shrink:0"></div>
-              <div class="sk-l" style="width:50%;height:16px;margin:0"></div>
-            </div>
-            <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
-              <div style="display:flex;flex-direction:column;gap:8px">
-                <div class="sk-l" style="width:100%;height:14px;margin:0"></div>
-                <div class="sk-l" style="width:75%;height:14px;margin:0"></div>
-              </div>
-              <div class="sk-l" style="width:100%;height:72px;margin:0;border-radius:8px"></div>
-              <div style="height:1px;background:#EBEBEE;margin:4px 0"></div>
-              <div style="display:flex;align-items:center;justify-content:space-between">
-                <div class="sk-l" style="width:76px;height:24px;margin:0;border-radius:16px"></div>
-                <div class="sk-l" style="width:96px;height:36px;margin:0;border-radius:8px"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- VIEW 7: COMMUNITY RESULTS -->
-    <section class="view" data-v="7">
-      <div class="results-wrap">
-        <div class="com-results-inner">
-          <div class="back-link" onclick="setView(5)"><span class="mi">arrow_back</span>Edit search</div>
-          <div class="results-head">
-            <div class="results-title">Your communities</div>
-            <p class="results-framing" id="com-results-framing">Active groups where peers in your role and industry actually show up.</p>
-          </div>
-          
-          <div id="com-low-nudge-slot"></div>
-          <div class="com-grid" id="com-grid"></div>
         </div>
       </div>
     </section>
@@ -808,7 +810,6 @@ function setView(n){
   window.scrollTo(0,0);
   if(n===3)startLoading();
   if(n===4)renderResults();
-  if(n===7){renderComFilters();renderComGrid();}
 }
 function renderEvents(){
   document.getElementById("events-list").innerHTML=EVENTS.map(e=>`
@@ -1092,7 +1093,23 @@ const COM_INDUSTRIES=[
   {id:"fintech",label:"Fintech"},
   {id:"healthcare",label:"Healthcare"},
   {id:"consulting",label:"Consulting"},
-  {id:"b2b",label:"Enterprise"}
+  {id:"b2b",label:"Enterprise"},
+  {id:"ecommerce",label:"E-commerce / Retail"},
+  {id:"media",label:"Media & Entertainment"},
+  {id:"gaming",label:"Gaming"},
+  {id:"edtech",label:"Education / EdTech"},
+  {id:"biotech",label:"Biotech & Pharma"},
+  {id:"energy",label:"Energy & Cleantech"},
+  {id:"manufacturing",label:"Manufacturing"},
+  {id:"automotive",label:"Automotive & Mobility"},
+  {id:"realestate",label:"Real Estate / PropTech"},
+  {id:"travel",label:"Travel & Hospitality"},
+  {id:"logistics",label:"Logistics & Supply Chain"},
+  {id:"insurance",label:"Insurance / InsurTech"},
+  {id:"telecom",label:"Telecommunications"},
+  {id:"agency",label:"Agency & Creative"},
+  {id:"nonprofit",label:"Nonprofit & Social Impact"},
+  {id:"government",label:"Government & Public Sector"}
 ];
 
 const COM_LOAD_MSGS=[
@@ -1102,62 +1119,122 @@ const COM_LOAD_MSGS=[
   "Ranking by fit to your role..."
 ];
 
-let selComInd=new Set(["technology","saas"]);
+let selComInd=new Set();
 let comLoadTimer=null;
 let comActiveFilter="all";
 let comSaved=new Set();
 let comResults=[];
 
-function renderComIndustries(){
-  const wrap=document.getElementById("com-industries-tags");
-  if(!wrap)return;
-  wrap.innerHTML=COM_INDUSTRIES.map(i=>`<button class="ds-chip${selComInd.has(i.id)?" active":""}" data-ind="${esc(i.id)}">${esc(i.label)}</button>`).join("");
-  wrap.querySelectorAll(".ds-chip").forEach(b=>{
-    b.addEventListener("click",()=>{
-      const id=b.dataset.ind;
-      if(selComInd.has(id)){selComInd.delete(id);}
-      else if(selComInd.size<2){selComInd.add(id);}
-      else{showToast("You can pick up to 2 industries");return;}
-      renderComIndustries();renderQSummary();
+// ---- Industry multiselect dropdown ----
+function renderIndMenu(){
+  const menu=document.getElementById("ms-menu");
+  if(!menu)return;
+  menu.innerHTML=`<div class="ms-hint">Select all that apply</div>`+COM_INDUSTRIES.map(i=>{
+    const sel=selComInd.has(i.id);
+    return `<div class="ms-opt${sel?" checked":""}" data-ind="${esc(i.id)}">
+      <span class="ms-check"><span class="mi">check</span></span>${esc(i.label)}</div>`;
+  }).join("");
+  menu.querySelectorAll(".ms-opt").forEach(o=>{
+    o.addEventListener("click",ev=>{
+      ev.stopPropagation();
+      const id=o.dataset.ind;
+      if(selComInd.has(id))selComInd.delete(id);
+      else selComInd.add(id);
+      renderIndMenu();renderIndControl();renderComSummary();
     });
   });
 }
+function renderIndControl(){
+  const txt=document.getElementById("ms-control-text");
+  const cnt=document.getElementById("ms-count");
+  if(!txt)return;
+  const labels=[...selComInd].map(id=>COM_INDUSTRIES.find(i=>i.id===id)?.label).filter(Boolean);
+  if(labels.length===0){
+    txt.textContent="Select industries";txt.classList.add("placeholder");
+    if(cnt)cnt.style.display="none";
+  }else{
+    txt.textContent=labels.join(", ");txt.classList.remove("placeholder");
+    if(cnt){cnt.style.display="inline-flex";cnt.textContent=labels.length;}
+  }
+}
+function toggleIndMenu(ev){
+  if(ev)ev.stopPropagation();
+  const menu=document.getElementById("ms-menu"),ctrl=document.getElementById("ms-control");
+  const open=menu.classList.toggle("open");
+  ctrl.classList.toggle("open",open);
+  if(open)renderIndMenu();
+}
+document.addEventListener("click",e=>{
+  const f=document.getElementById("cf-ind-field");
+  if(f&&!f.contains(e.target)){
+    document.getElementById("ms-menu")?.classList.remove("open");
+    document.getElementById("ms-control")?.classList.remove("open");
+  }
+});
+// Back-compat: old callers expect renderComIndustries
+function renderComIndustries(){renderIndControl();}
 
-function renderQSummary(){
-  const t=document.getElementById("cf-title")?.value?.trim()||"professionals";
-  const loc=document.getElementById("cf-loc")?.value?.trim()||"your area";
+// ---- Subtle summary line (below the button) ----
+function renderComSummary(){
+  const tRaw=document.getElementById("cf-title")?.value?.trim()||"";
+  const city=document.getElementById("cf-loc")?.value?.trim()||"";
+  const country=document.getElementById("cf-country")?.value?.trim()||"";
+  const el=document.getElementById("com-summary-line");
+  if(!el)return;
+  // Nothing entered yet — keep it clean
+  if(!tRaw&&!city&&!country&&selComInd.size===0){el.innerHTML="";return;}
+  const t=tRaw||"professionals";
+  const place=[city,country].filter(Boolean).join(", ")||"your area";
   const inds=[...selComInd].map(id=>COM_INDUSTRIES.find(i=>i.id===id)?.label).filter(Boolean);
   let indPhrase="";
   if(inds.length===1)indPhrase=` in <strong>${esc(inds[0])}</strong>`;
   else if(inds.length===2)indPhrase=` in <strong>${esc(inds[0])}</strong> and <strong>${esc(inds[1])}</strong>`;
-  const el=document.getElementById("q-summary-text");
-  if(el)el.innerHTML=`We'll find communities for <strong>${esc(t)}</strong>${indPhrase}, based in <strong>${esc(loc)}</strong>.`;
+  else if(inds.length>2){
+    const last=inds[inds.length-1];
+    const head=inds.slice(0,-1).map(x=>`<strong>${esc(x)}</strong>`).join(", ");
+    indPhrase=` in ${head} and <strong>${esc(last)}</strong>`;
+  }
+  el.innerHTML=`We'll find communities for <strong>${esc(t)}</strong>${indPhrase}, based in <strong>${esc(place)}</strong>.`;
 }
+// Back-compat alias
+function renderQSummary(){renderComSummary();}
 
-// Community location typeahead (re-uses LOCS)
+// Community location typeahead — city-only, with country auto-fill
 let cLocFocused=-1;
+// Maps city -> country (derived from the old combined LOCS list)
+const CITY_COUNTRY={
+  "London":"United Kingdom","Manchester":"United Kingdom","Birmingham":"United Kingdom",
+  "Leeds":"United Kingdom","Bristol":"United Kingdom","Edinburgh":"United Kingdom","Glasgow":"United Kingdom",
+  "Dublin":"Ireland","Amsterdam":"Netherlands","Paris":"France","Berlin":"Germany","Munich":"Germany",
+  "Stockholm":"Sweden","Oslo":"Norway","Zurich":"Switzerland","Brussels":"Belgium","Madrid":"Spain",
+  "Barcelona":"Spain","Milan":"Italy","Vienna":"Austria","New York":"United States","San Francisco":"United States",
+  "Chicago":"United States","Boston":"United States","Seattle":"United States","Toronto":"Canada",
+  "Sydney":"Australia","Singapore":"Singapore","Dubai":"United Arab Emirates"
+};
+const CITIES=Object.keys(CITY_COUNTRY);
 function onCLocInput(val){
-  const list=document.getElementById("cloc-list"),clr=document.getElementById("cloc-clear");
-  if(clr)clr.style.display=val?"flex":"none";
-  renderQSummary();
+  const list=document.getElementById("cloc-list");
+  renderComSummary();
   if(!val.trim()){list.classList.remove("open");cLocFocused=-1;return;}
-  const m=LOCS.filter(l=>l.toLowerCase().includes(val.toLowerCase())).slice(0,8);
+  const m=CITIES.filter(l=>l.toLowerCase().includes(val.toLowerCase())).slice(0,8);
   if(!m.length){list.classList.remove("open");return;}
   cLocFocused=-1;
-  list.innerHTML=m.map(l=>`<div class="ta-item" data-v="${esc(l)}" onmousedown="selectCLoc('${esc(l)}')"><span class="mi">place</span>${esc(l)}</div>`).join("");
+  list.innerHTML=m.map(l=>`<div class="ta-item" data-v="${esc(l)}" onmousedown="selectCLoc('${esc(l)}')"><span class="mi">place</span>${esc(l)}<span style="margin-left:auto;color:var(--text-3);font-size:12px">${esc(CITY_COUNTRY[l])}</span></div>`).join("");
   list.classList.add("open");
 }
 function selectCLoc(val){
   document.getElementById("cf-loc").value=val;
+  // Auto-fill the country field to match the chosen city
+  const co=CITY_COUNTRY[val];
+  const coEl=document.getElementById("cf-country");
+  if(co&&coEl)coEl.value=co;
   document.getElementById("cloc-list").classList.remove("open");
-  const clr=document.getElementById("cloc-clear");if(clr)clr.style.display="flex";
-  cLocFocused=-1;renderQSummary();
+  cLocFocused=-1;renderComSummary();
 }
 function clearCLoc(){
   document.getElementById("cf-loc").value="";
   document.getElementById("cloc-list").classList.remove("open");
-  const clr=document.getElementById("cloc-clear");if(clr)clr.style.display="none";
-  document.getElementById("cf-loc").focus();renderQSummary();
+  document.getElementById("cf-loc").focus();renderComSummary();
 }
 function onCLocKey(e){
   const list=document.getElementById("cloc-list"),items=list.querySelectorAll(".ta-item");
@@ -1190,20 +1267,33 @@ function matchCommunities(){
   return scored.slice(0,6).map(x=>x.c);
 }
 
-function startComLoading(){
-  // Capture results based on current form state
+// Run search inline within view 5: show loading over results region, then loaded grid
+function runComSearch(){
   comResults=matchCommunities();
-  setView(6);
+  const initial=document.getElementById("com-results-initial");
+  const loading=document.getElementById("com-results-loading");
+  const loaded=document.getElementById("com-results-loaded");
+  if(initial)initial.style.display="none";
+  if(loaded)loaded.style.display="none";
+  if(loading)loading.style.display="block";
   let i=0;
   const msgEl=document.getElementById("com-loading-msg");
   if(msgEl)msgEl.textContent=COM_LOAD_MSGS[0];
   if(comLoadTimer)clearInterval(comLoadTimer);
   comLoadTimer=setInterval(()=>{
     i++;
-    if(i>=COM_LOAD_MSGS.length){clearInterval(comLoadTimer);setView(7);return;}
+    if(i>=COM_LOAD_MSGS.length){
+      clearInterval(comLoadTimer);comLoadTimer=null;
+      if(loading)loading.style.display="none";
+      if(loaded)loaded.style.display="block";
+      renderComFilters();renderComGrid();
+      return;
+    }
     if(msgEl)msgEl.textContent=COM_LOAD_MSGS[i];
-  },1400);
+  },900);
 }
+// Back-compat alias
+function startComLoading(){runComSearch();}
 
 function renderComFilters(){
   const platforms=["all",...new Set(comResults.map(c=>c.platform))];
@@ -1220,7 +1310,7 @@ function renderComGrid(){
   const countEl=document.getElementById("com-count");if(countEl)countEl.textContent=`${filtered.length} ${filtered.length===1?"community":"communities"}`;
   const nudgeSlot=document.getElementById("com-low-nudge-slot");
   if(nudgeSlot){if(comResults.length<5){
-    nudgeSlot.innerHTML=`<div class="com-low-nudge"><span class="mi">tips_and_updates</span><div>Only ${comResults.length} match${comResults.length===1?"":"es"} for that combination. Try broadening your industry or location. <a onclick="setView(5)" style="color:var(--brand-2);text-decoration:underline;cursor:pointer;font-weight:500">Edit search</a></div></div>`;
+    nudgeSlot.innerHTML=`<div class="com-low-nudge"><span class="mi">tips_and_updates</span><div>Only ${comResults.length} match${comResults.length===1?"":"es"} for that combination. Try broadening your industry or location above, then search again.</div></div>`;
   }else{nudgeSlot.innerHTML="";}}
   const grid=document.getElementById("com-grid");
   if(!filtered.length){
@@ -1271,33 +1361,32 @@ function toggleComSave(name,btn){
 
 // Hook live summary updates on text inputs
 document.addEventListener("input",e=>{
-  if(e.target&&(e.target.id==="cf-title"||e.target.id==="cf-loc"))renderQSummary();
+  if(e.target&&(e.target.id==="cf-title"||e.target.id==="cf-loc"||e.target.id==="cf-country"))renderComSummary();
 });
 
-// Extend setView to handle new views (replaces the original above)
+// Extend setView to handle the consolidated communities view (replaces the original above)
 setView=function(n){
   document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",+v.dataset.v===n));
   document.querySelectorAll(".devnav button").forEach(b=>b.classList.toggle("active",+b.dataset.vn===n));
   window.scrollTo(0,0);
-  if(n!==6&&comLoadTimer){clearInterval(comLoadTimer);comLoadTimer=null;}
+  if(n!==5&&comLoadTimer){clearInterval(comLoadTimer);comLoadTimer=null;}
   if(n===3)startLoading();
   if(n===4)renderResults();
-  if(n===5){renderComIndustries();renderQSummary();}
-  if(n===6){
-    // Dev-nav direct jump: kick off loading visual, but don't auto-advance (let it cycle for demo)
-    let i=0;
-    const msgEl=document.getElementById("com-loading-msg");
-    if(msgEl)msgEl.textContent=COM_LOAD_MSGS[0];
-    if(comLoadTimer)clearInterval(comLoadTimer);
-    comLoadTimer=setInterval(()=>{i=(i+1)%COM_LOAD_MSGS.length;if(msgEl)msgEl.textContent=COM_LOAD_MSGS[i];},1400);
-  }
-  if(n===7){
-    if(!comResults.length)comResults=matchCommunities();
-    renderComFilters();renderComGrid();
+  if(n===5){
+    // Reset results region to the initial skeleton state each time we enter
+    const initial=document.getElementById("com-results-initial");
+    const loading=document.getElementById("com-results-loading");
+    const loaded=document.getElementById("com-results-loaded");
+    if(loading)loading.style.display="none";
+    if(loaded)loaded.style.display="none";
+    if(initial)initial.style.display="block";
+    if(comLoadTimer){clearInterval(comLoadTimer);comLoadTimer=null;}
+    renderIndControl();renderComSummary();
   }
 };
 
 renderEvents();renderArticles();renderIndustries();renderDomains();renderChips();setupChipInput();setupFilters();
+renderIndControl();renderComSummary();
 </script>
 </body>
 </html>
